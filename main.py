@@ -1,7 +1,7 @@
 """
 Systemic Risk Engine — Main Orchestrator
 =========================================
-Research-grade pipeline for Indian equity sector risk analysis.
+Research-grade pipeline for Indian equity sector risk analysis
 
 Pipeline order:
   1. Load sector return data
