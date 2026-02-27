@@ -91,8 +91,8 @@ CONFIG: dict[str, Any] = {
 
     # --- Risk ---
     "var_confidence":     0.95,
-    "crash_threshold":   -0.10,   # sector drops >10% in simulation horizon
-    "crash_n_sectors":    3,      # systemic = N sectors crash simultaneously
+    "crash_threshold":   -0.10,   # sector drops >10% in simulation horizon.
+    "crash_n_sectors":    3,      # systemic = N sectors crash simultaneously.
 
     # --- GPU ---
     "device": "cuda" if torch.cuda.is_available() else "cpu",
