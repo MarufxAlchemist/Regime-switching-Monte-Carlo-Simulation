@@ -1,5 +1,5 @@
 """
-Mathematical Verification of Cholesky Decomposition Logic
+Mathematical Verification of Cholesky Decomposition Logic.
 ==========================================================
 
 Goal: Verify that the transform  correlated_W = W @ L.T
