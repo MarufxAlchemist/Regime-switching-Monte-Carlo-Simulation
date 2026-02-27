@@ -3,7 +3,7 @@ import numpy as np
 from torch import distributions as dist
 from scipy.stats import chi2
 
-# Simulation parameters
+# Simulation parameters.
 num_paths = 50000
 num_assets = 7
 T = 1       # 1 year horizon
