@@ -1,6 +1,6 @@
 """
 Rolling Backtest Engine — Expanding-Window Walk-Forward Validation
-==================================================================
+===================================================================
 Orchestrates regime-switching systemic-risk Monte Carlo backtests
 *without* implementing any simulation logic internally.
 
