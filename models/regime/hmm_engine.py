@@ -4,7 +4,7 @@ from hmmlearn import hmm
 # Number of assets
 NUM_ASSETS = 10  
 
-# Define true parameters for HMM
+# Define true parameters for HMM.
 TRUE_A = [
     [0, 0.5, 0.5],
     [0.6, 0, 0.4],
