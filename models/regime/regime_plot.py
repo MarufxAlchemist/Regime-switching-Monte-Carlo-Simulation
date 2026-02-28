@@ -10,7 +10,7 @@ the Crisis emission mean is manually biased lower and the model is refit.
 
 import numpy as np
 import matplotlib
-matplotlib.use("Agg")                          # headless rendering
+matplotlib.use("Agg")              # headless rendering
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import yfinance as yf
