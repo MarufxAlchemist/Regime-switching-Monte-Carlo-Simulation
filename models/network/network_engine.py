@@ -47,7 +47,7 @@ print(f"  {len(raw)} days × {len(TICKERS)} assets")
 # ─────────────────────────────────────────────────────────────────────────────
 print("\nStep 1 — Computing rolling 60-day correlations ...")
 
-roll_corr = {}      # date → (N×N) correlation DataFrame
+roll_corr = {}      # date → (N×N) correlation DataFrame.
 dates_roll = rets.index[WINDOW - 1:]
 
 for i, date in enumerate(dates_roll):
@@ -124,7 +124,7 @@ centrality_ts = {}          # date → {ticker: centrality}
 for date, corr_df in roll_corr.items():
     G = build_graph(corr_df, CORR_THRESH)
 
-    # Network density: fraction of possible edges that are present
+    # Network density: fraction of possible edges that are present.
     density_ts[date] = nx.density(G)
 
     # Eigenvector centrality (may not converge if graph is disconnected/sparse)
