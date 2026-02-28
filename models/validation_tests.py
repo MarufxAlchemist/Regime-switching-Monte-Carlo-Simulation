@@ -3,8 +3,8 @@ from scipy import stats
 import math
 
 def kupiec_pof_test(violations, alpha):
-    n = violations.sum()  # number of violations
-    T = len(violations)   # total number of observations
+    n = violations.sum()  # number of violations.
+    T = len(violations)   # total number of observations.
     
     if n==0 or n==T:      # If all or no violations occur, we cannot calculate test statistic and p-value
         return {
