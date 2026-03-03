@@ -39,7 +39,7 @@ import pandas as pd
 log = logging.getLogger("backtest")
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Protocols
+# Protocols.
 # ─────────────────────────────────────────────────────────────────────────────
 
 class PipelineFn(Protocol):
