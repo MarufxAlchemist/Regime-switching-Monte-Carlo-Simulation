@@ -35,7 +35,7 @@ torch.manual_seed(42)
 num_paths  = 50_000
 num_assets = 7
 
-# Build a random symmetric positive-definite covariance matrix
+# Build a random symmetric positive-definite covariance matrix.
 raw   = torch.randn(num_assets, num_assets) * 0.02
 Sigma = raw @ raw.T + torch.eye(num_assets) * 0.01
 
