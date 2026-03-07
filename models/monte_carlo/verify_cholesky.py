@@ -98,7 +98,7 @@ for i in range(num_assets):
 print(f"  {'PASS ✓' if all_pass else 'FAIL ✗'}")
 
 # ─────────────────────────────────────────────────────────────────────────────
-# TEST 4 – Sample correlation matrix ≈ true correlation matrix
+# TEST 4 – Sample correlation matrix ≈ true correlation matrix.
 # ─────────────────────────────────────────────────────────────────────────────
 print()
 print(sep)
