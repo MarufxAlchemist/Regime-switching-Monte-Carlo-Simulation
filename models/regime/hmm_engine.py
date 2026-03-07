@@ -20,7 +20,7 @@ TRUE_SIGMA = [
     np.eye(NUM_ASSETS) * 0.05,       # vols for NUM_ASSETS assets
     np.eye(NUM_ASSETS) * 0.1          # vols for NUM_ASSETS assets
 ]
-TRUE_PI = [0.3, 0.4, 0.3]   # initial state probabilities
+TRUE_PI = [0.3, 0.4, 0.3]   # initial state probabilities.
 
 # Define the number of states and generate observed data
 NUM_STATES = 3   
