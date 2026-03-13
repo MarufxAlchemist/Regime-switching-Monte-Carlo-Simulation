@@ -22,7 +22,7 @@ TRUE_SIGMA = [
 ]
 TRUE_PI = [0.3, 0.4, 0.3]   # initial state probabilities
 
-# Define the number of states and generate observed data
+# Define the number of states and generate observed data.
 NUM_STATES = 3   
 T = 250            # sequence length
 OBSERVATIONS = np.empty((T, NUM_ASSETS))
