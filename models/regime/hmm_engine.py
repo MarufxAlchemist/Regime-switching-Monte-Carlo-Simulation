@@ -1,7 +1,7 @@
 import numpy as np
 from hmmlearn import hmm
 
-# Number of assets
+# Number of assets.
 NUM_ASSETS = 10  
 
 # Define true parameters for HMM
