@@ -26,7 +26,7 @@ MODEL_NAME  = "ProsusAI/finbert"
 ALPHA       = 0.05    # sentiment → drift adjustment  (annualised units)
 BETA        = 0.10    # sentiment → vol amplification factor
 
-# Sentiment score bounds for clipping (prevents nonsensical adjustments)
+# Sentiment score bounds for clipping (prevents nonsensical adjustments).
 SCORE_MIN, SCORE_MAX = -1.0, 1.0
 
 # FinBERT label order  (as per ProsusAI model card)
