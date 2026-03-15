@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-# ── fixtures ────────────────────────────────────────────────────────────────
+# ── fixtures ──────────────────────────────────────────────────────────────
 
 def _make_returns(
     n_days: int = 300,
