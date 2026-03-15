@@ -12,7 +12,7 @@ Design principles:
   • Memory-efficient — only lightweight ``BacktestResult`` records are
     retained; full price paths are never accumulated.
   • Modular — ``BacktestConfig``, ``BacktestResult``, and
-    ``RollingBacktester`` are fully decoupled for reuse.
+    ``RollingBacktester`` are fully decoupled for reuse
 
 Usage
 -----
