@@ -37,7 +37,7 @@ def _stub_pipeline(var_value: float = -0.05):
     return _fn
 
 
-# ── import under test ──────────────────────────────────────────────────────
+# ── import under test ───────────────────────────────────────────────────
 
 from models.backtest_engine import (
     BacktestConfig,
