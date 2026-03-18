@@ -14,7 +14,7 @@ mu = torch.tensor([0.08, 0.10, 0.07, 0.09, 0.06, 0.11, 0.08])  # annual expected
 
 # Example covariance matrix (symmetric positive definite)
 raw = torch.randn(num_assets, num_assets) * 0.02
-Sigma = raw @ raw.T + torch.eye(num_assets) * 0.01  # ensures PD
+Sigma = raw @ raw.T + torch.eye(num_assets) * 0.01  # ensures PD.
 
 # --- Initial stock prices ---
 S0 = torch.tensor([100.0, 150.0, 200.0, 120.0, 90.0, 180.0, 110.0])
