@@ -10,7 +10,7 @@ T = 1       # 1 year horizon
 dt = T / num_paths  # time step
 
 # --- Asset parameters (example values) ---
-mu = torch.tensor([0.08, 0.10, 0.07, 0.09, 0.06, 0.11, 0.08])  # annual expected returns
+mu = torch.tensor([0.08, 0.10, 0.07, 0.09, 0.06, 0.11, 0.08])  # annual expected returns.
 
 # Example covariance matrix (symmetric positive definite)
 raw = torch.randn(num_assets, num_assets) * 0.02
