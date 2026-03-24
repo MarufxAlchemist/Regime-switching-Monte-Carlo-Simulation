@@ -1,5 +1,5 @@
-import backtest_engine as be
-import validation_tests as vt
+from models import backtest_engine as be
+from models import validation_tests as vt
 
 def run_backtest(model_type):
     """Runs backtest for given model type and returns results in a dictionary"""

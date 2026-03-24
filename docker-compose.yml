@@ -1,0 +1,79 @@
+version: "3.9"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Regime-Switching Monte Carlo — Docker Compose
+# ─────────────────────────────────────────────────────────────────────────────
+
+x-common: &common
+  build:
+    context: .
+    dockerfile: Dockerfile
+    target: runtime
+  environment:
+    - PYTHONUNBUFFERED=1
+    - HF_HOME=/app/.cache/huggingface
+  volumes:
+    # Persist HuggingFace model cache between runs (avoids re-downloading FinBERT)
+    - hf_cache:/app/.cache/huggingface
+    # Mount logs directory so output is accessible on the host
+    - ./logs:/app/logs
+
+services:
+
+  # ── Full pipeline run ──────────────────────────────────────────────────────
+  pipeline:
+    <<: *common
+    container_name: regime_mc_pipeline
+    command: python main.py
+    profiles: [pipeline]
+
+  # ── Test runner ───────────────────────────────────────────────────────────
+  test:
+    <<: *common
+    container_name: regime_mc_test
+    command: pytest tests/ -v --tb=short
+    profiles: [test]
+
+  # ── Interactive shell (for development / debugging) ───────────────────────
+  shell:
+    <<: *common
+    container_name: regime_mc_shell
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+    profiles: [shell]
+
+  # ── Standalone sub-module runners ─────────────────────────────────────────
+  network:
+    <<: *common
+    container_name: regime_mc_network
+    command: python models/network/network_engine.py
+    profiles: [network]
+
+  contagion:
+    <<: *common
+    container_name: regime_mc_contagion
+    command: python models/network/contagion.py
+    profiles: [contagion]
+
+  regime:
+    <<: *common
+    container_name: regime_mc_regime
+    command: python models/regime/hmm_engine.py
+    profiles: [regime]
+
+  sentiment:
+    <<: *common
+    container_name: regime_mc_sentiment
+    command: python models/sentiment/sentiment_engine.py
+    profiles: [sentiment]
+
+  verify_cholesky:
+    <<: *common
+    container_name: regime_mc_cholesky
+    command: python models/monte_carlo/verify_cholesky.py
+    profiles: [verify_cholesky]
+
+volumes:
+  hf_cache:
+    driver: local

@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "regime-switching-mc"
+version = "0.1.0"
+description = "Regime-switching Monte Carlo systemic risk engine for Indian equity sectors"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["models*"]
+
+# ── pytest ────────────────────────────────────────────────────────────────────
+[tool.pytest.ini_options]
+# Add project root to sys.path so `import models` and `import main` resolve.
+pythonpath = ["."]
+testpaths  = ["tests"]
+addopts    = "-v --tb=short"
+
+# ── coverage (optional, runs if pytest-cov is installed) ─────────────────────
+[tool.coverage.run]
+source = ["models", "main"]
+omit   = ["tests/*", "**/__init__.py"]

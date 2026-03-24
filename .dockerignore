@@ -1,0 +1,53 @@
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ── Virtual environment ───────────────────────────────────────────────────────
+venv/
+env/
+.venv/
+.env
+
+# ── Generated logs and run artefacts ─────────────────────────────────────────
+*.log
+nohup.out
+systemic_risk.log
+logs/
+
+# ── Model caches (re-downloaded inside container) ────────────────────────────
+*.pkl
+*.h5
+*.pt
+*.bin
+*.safetensors
+.cache/
+
+# ── Data files ────────────────────────────────────────────────────────────────
+*.csv
+*.parquet
+
+# ── Version control ───────────────────────────────────────────────────────────
+.git/
+.gitignore
+
+# ── IDE / OS ──────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# ── Jupyter ───────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+Dockerfile
+docker-compose.yml
+.dockerignore
