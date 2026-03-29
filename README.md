@@ -15,47 +15,35 @@ The engine runs a sequential daily simulation pipeline over a 252-day trading ye
 
 1. **Market Regime Detection (HMM)**
    Uses a 3-state Gaussian Hidden Markov Model on historical log returns to classify the current market environment as either **Bull**, **Bear**, or **Crisis**.
+   
+   ![HMM Regime Plot](./models/regime/regime_plot.png)
+
 2. **Correlation Network Generation**
    Builds a dynamic correlation graph over a 60-day rolling window to identify highly interconnected "central" stocks that pose the greatest systemic risk if they crash.
+   
+   ![Network Topology Plot](./models/network/network_plot.png)
+
 3. **Sentiment Analysis (FinBERT)**
    Scrapes recent financial headlines and runs them through a transformer-based NLP model to generate a bullish/bearish aggregate tone, which alters the expected drift ($\mu$) and volatility ($\sigma$) in the fundamental simulation math.
+
 4. **Contagion-Adjusted Monte Carlo**
    Simulates 5,000 future price paths using Geometric Brownian Motion (GBM). If a severe negative statistical event occurs on specific stock paths, a mathematically constructed domino effect (contagion) spikes the volatility of highly correlated neighboring stocks on the network graph.
+   
+   ![Contagion Propagation Plot](./models/network/contagion_plot.png)
+
 5. **Advanced Risk Metrics**
    Extracts standard and portfolio-level risk measures from the simulated terminal paths, including **95% Value at Risk (VaR)**, **Expected Shortfall (ES)**, and the probability of a multi-sector **Systemic Crash**.
 
 ---
 
-## 🧩 Detailed Function Breakdown (`main.py`)
+## 🧩 Code Architecture (`main.py`)
 
-Here is a step-by-step breakdown of every major function driving the risk engine within `main.py`:
-
-- **`load_data(cfg: dict) -> tuple`**  
-  Connects to the Yahoo Finance API (`yfinance`) to fetch daily historical pricing for the 10 core equities. Converts closing prices into pure logarithmic returns to feed the models.
-  
-- **`detect_regime(returns: pd.DataFrame, cfg: dict) -> dict`**  
-  Initializes and fits a 3-state Gaussian Hidden Markov Model (using `hmmlearn`). It analyzes the volatility and drift of recent returns to statistically classify whether the market is currently in a *Bull*, *Bear*, or *Crisis* state.
-
-- **`build_network(returns: pd.DataFrame, cfg: dict) -> dict`**  
-  Uses the last 60 trading days (rolling window) to generate a correlation matrix. It converts strong correlations into a bidirectional mathematical graph using `networkx`, evaluating 'Eigenvector Centrality' to locate systematically dangerous stocks.
-
-- **`compute_sentiment(headlines: list[str], cfg: dict) -> dict`**  
-  Passes raw financial text/headlines into `ProsusAI/finbert` (a Hugging Face NLP model). Returns a normalized sentiment score between `-1.0` and `+1.0`, alongside a textual tone (Bullish/Bearish/Neutral).
-
-- **`adjust_parameters(returns: pd.DataFrame, sentiment_score: float, regime_result: dict, cfg: dict) -> dict`**  
-  The mathematical bridge of the engine. It takes historical drift and volatility, boosting drift based on positive sentiment, scaling up volatility based on extreme sentiment, and applying a massive stress multiplier if the HMM detects a Crisis.
-
-- **`run_simulation(S0: np.ndarray, params: dict, network_result: dict, cfg: dict) -> tuple`**  
-  The core Monte Carlo engine. It runs 5,000 randomized scenarios. At every simulated step, if a stock path mathematically "crashes" (negative z-score below a threshold), it actively queries the Correlation Graph (from `build_network`) to explosively boost the volatility of connected assets, propagating the shock.
-
-- **`compute_risk_metrics(paths: np.ndarray, S0: np.ndarray, cfg: dict) -> dict`**  
-  Evaluates the 5,000 terminal paths to generate institutional risk metrics. It computes the 95% Confidence Value at Risk (VaR), Expected Shortfall (ES), and the joint probability of a multi-sector systemic crash.
-
-- **`plot_dashboard(...)`**  
-  A styling and rendering engine powered by `matplotlib`. Transforms the raw statistical outputs and price paths into the dark-themed visual summary image.
-
-- **`main(headlines: list[str], cfg: dict) -> dict`**  
-  The primary orchestrator. Dictates the exact sequence of execution, dynamically passing outputs from Stage 1 into Stage 2, handles error catching, and beautifully prints the final structured summary to the terminal.
+The `main.py` script serves as the primary orchestrator that sequentially drives the engine. Rather than exploring each function, the execution flow is entirely linear:
+1. Fetch asset pricing via `yfinance`.
+2. Extract mathematical matrices (HMM variables, Network Centrality, and FinBERT Sentiment scores).
+3. Override standard Geometric Brownian Motion variables based on current regimes and sentiment.
+4. Force 5,000 contagion-amplified random walks.
+5. Generate aggregated risk metrics and output dashboards.
 
 ---
 
