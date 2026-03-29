@@ -33,6 +33,9 @@ import torch
 import networkx as nx
 import yfinance as yf
 from hmmlearn import hmm
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Logging
@@ -539,6 +542,51 @@ def compute_risk_metrics(
     }
 
 
+def plot_dashboard(paths: np.ndarray, S0: np.ndarray, risk: dict, cfg: dict, filename: str = "simulation_dashboard.png"):
+    """Generates a summary dashboard of the simulation results."""
+    log.info("Stage 8 — Generating simulation dashboard plot...")
+    fig, axes = plt.subplots(1, 2, figsize=(16, 6), facecolor="#0f1117")
+    fig.patch.set_facecolor("#0f1117")
+    for ax in axes:
+        ax.set_facecolor("#0f1117")
+        ax.tick_params(colors="white")
+        ax.xaxis.label.set_color("white")
+        ax.yaxis.label.set_color("white")
+        ax.title.set_color("white")
+        for spine in ax.spines.values():
+            spine.set_edgecolor("#333")
+
+    N_STEPS = paths.shape[1] - 1
+    days = np.arange(N_STEPS + 1)
+    tickers = cfg["tickers"]
+    
+    # Panel 1: Mean Simulated Paths
+    ax = axes[0]
+    mean_paths = paths.mean(axis=0)  # (N_steps+1, N_assets)
+    for i in range(len(tickers)):
+        ax.plot(days, mean_paths[:, i] / S0[i], label=tickers[i], linewidth=1.5)
+    ax.axhline(1.0, color="#95a5a6", linewidth=1.0, linestyle="--")
+    ax.set_title("Mean Simulated Price Paths (Normalised)", fontsize=12)
+    ax.set_xlabel("Trading Days")
+    ax.set_ylabel("Normalised Price (S/S₀)")
+    ax.legend(facecolor="#1a1a2e", labelcolor="white", fontsize=8, loc="upper left")
+
+    # Panel 2: 95% Expected Shortfall
+    ax = axes[1]
+    es_vals = risk["per_asset_es"] * 100  # in percentage
+    x_pos = np.arange(len(tickers))
+    colors = ["#e74c3c" if v < -15 else "#f39c12" for v in es_vals]
+    ax.bar(x_pos, es_vals, color=colors, alpha=0.8)
+    ax.set_xticks(x_pos)
+    ax.set_xticklabels(tickers, rotation=45, ha="right", fontsize=9, color="white")
+    ax.set_title("95% Expected Shortfall per Sector", fontsize=12)
+    ax.set_ylabel("Expected Shortfall (%)")
+
+    plt.tight_layout()
+    plt.savefig(filename, dpi=150, bbox_inches="tight", facecolor="#0f1117")
+    log.info("  Dashboard saved → %s", filename)
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Main pipeline
 # ─────────────────────────────────────────────────────────────────────────────
@@ -593,6 +641,9 @@ def main(
 
     # ── 7. Risk metrics ───────────────────────────────────────────────────────
     risk = compute_risk_metrics(paths, S0, run_cfg)
+
+    # ── 8. Dashboard plot ─────────────────────────────────────────────────────
+    plot_dashboard(paths, S0, risk, run_cfg)
 
     t_end = time.time()
     log.info("=" * 70)
