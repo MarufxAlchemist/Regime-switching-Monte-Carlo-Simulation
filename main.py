@@ -422,7 +422,7 @@ def run_simulation(
     A     = network_result["adjacency_matrix"]
     N_P   = cfg["mc_n_paths"]
     N_S   = cfg["mc_n_steps"]
-    dt    = 1.0 / 252
+    dt    = 1.0          # mu and sigma are already daily-scale from adjust_parameters()
     alpha = cfg["contagion_alpha"]
     theta = cfg["contagion_theta_z"]
     beta  = cfg["contagion_beta"]
