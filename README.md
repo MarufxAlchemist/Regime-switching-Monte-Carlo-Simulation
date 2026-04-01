@@ -55,6 +55,52 @@ Upon a successful pipeline execution, the engine spits out numerical metrics and
 
 ---
 
+## 🧮 Mathematical Framework
+
+The engine relies on a sequence of quantitative models to simulate cascading tail-risk.
+
+### 1. Market Dynamics & Regime Detection
+**Log Returns Tracking:**
+$r_t = \ln\left(\frac{P_t}{P_{t-1}}\right)$
+
+**Hidden Markov Model (HMM):** Returns are drawn from a 3-state multivariate Gaussian distribution (Bull, Bear, Crisis), transitioning via Markov chain $A_{ij}$:
+$r_t \mid Z_t=k \ \sim \ \mathcal{N}(\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)$
+
+### 2. Network Topology
+**Adjacency Matrix ($\mathbf{A}$):** Linkages between sectors rely on thresholded rolling Pearson correlations $\rho_{ij}$:
+$w_{ij} = \begin{cases} |\rho_{ij}| & \text{if } |\rho_{ij}| > \text{threshold (e.g., 0.50)} \\ 0 & \text{otherwise} \end{cases}$
+
+**Eigenvector Centrality:** Systemic importance depends on the importance of an equity's neighbors:
+$x_i = \frac{1}{\lambda_{max}} \sum_{j=1}^N w_{ij} x_j$
+
+### 3. Sentiment Adjustments
+**FinBERT Sentiment Scoring:**
+$S = \frac{1}{N_{docs}} \sum (P_{\text{positive}} - P_{\text{negative}}) \in [-1, 1]$
+
+**Drift & Volatility Adjustments:** Baseline $\mu$ and $\sigma$ from the HMM are dynamically adjusted by news sentiment:
+$\mu_{\text{adj}} = \mu_{\text{base}} + \alpha_{\text{sentiment}} \cdot S$
+$\sigma_{\text{adj}} = \sigma_{\text{base}} \times \left(1 + \beta_{\text{sentiment}} \cdot |S| \right)$
+
+### 4. Contagion-Amplified Monte Carlo
+**Baseline Price Evolution (Discrete GBM):**
+$P_{j, t+\Delta t} = P_{j, t} \exp\left[ \left(\mu_j - \frac{1}{2}\sigma_{j,t}^2\right)\Delta t + \sigma_{j,t} \sqrt{\Delta t} Z \right], \quad Z \sim \mathcal{N}(0, 1)$
+
+**Contagion Volatility Amplification:** If asset $i$ is stressed ($z_{i,t} < \theta_z$), it transmits panic to its connected neighbor $j$:
+$\sigma_{j, t+1} = \sigma_{j,t} \times (1 + \alpha_{\text{contagion}} \cdot w_{ij})$
+
+**Volatility Mean-Reversion & Cap:**
+$\sigma_{j, t+1} \leftarrow \sigma_{j,t+1}(1 - \beta_{\text{decay}}) + \sigma_{\text{base}} \cdot \beta_{\text{decay}}$
+
+### 5. Risk Metrics
+**Value at Risk (VaR) & Expected Shortfall (CVaR):**
+$P\left(R_p \le -\text{VaR}_{95\%}\right) = 0.05$
+$\text{ES}_{95\%} = -\mathbb{E}\left[ R_p \mid R_p \le -\text{VaR}_{95\%} \right]$
+
+**Systemic Crash Probability:** The joint probability that $k$ or more sectors drop by $> \theta_{\text{crash}}$ simultaneously:
+$P_{\text{crash}} = P\left( \sum_{j=1}^{N} \mathbf{1}\{R_j < \theta_{\text{crash}}\} \ge k_{\text{sectors}} \right)$
+
+---
+
 ## 🛠️ Usage & Installation
 
 This project is built and officially supported via **Docker**, avoiding dependency conflicts (especially involving `torch`, `yfinance`, and `hmmlearn`).
