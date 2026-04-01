@@ -441,6 +441,7 @@ def make_pipeline_fn(base_cfg: dict[str, Any]) -> Callable[..., dict[str, Any]]:
         return {
             "var_95": risk["var_95"],
             "expected_shortfall": risk["expected_shortfall"],
+            "systemic_crash_probability": risk["systemic_crash_probability"],
             "regime": regime_result["current_regime_name"],
         }
 
