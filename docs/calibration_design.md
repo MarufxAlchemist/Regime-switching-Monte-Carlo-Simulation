@@ -104,7 +104,7 @@ For each `(alpha, beta, window)` combination, one rolling backtest is executed p
 
 ### 4.1 Per-Window Record (row-level grain)
 
-Each row represents **one forecast origin** within **one experiment trial**.
+Each row represents **one forecast origin** within **one experiment trial**
 
 ```
 sensitivity_results (row-level)
