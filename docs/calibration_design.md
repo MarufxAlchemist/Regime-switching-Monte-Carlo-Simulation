@@ -123,7 +123,7 @@ systemic_crash_prob : float   (to be added)
 
 ### 4.2 Trial-Level Summary (aggregated grain)
 
-Each row represents **one (alpha, beta, window) combination** — 125 rows total.
+Each row represents **one (alpha, beta, window) combination** — 125 rows total
 
 ```
 sensitivity_summary (trial-level)
