@@ -86,7 +86,7 @@ Understand how **three key parameters** shape the model's risk estimates by syst
 
 ## 3. Target Metrics (What to Record)
 
-For each `(alpha, beta, window)` combination, one rolling backtest is executed producing a list of `BacktestResult` records. The following four scalars are then **aggregated** across all windows in that run.
+For each `(alpha, beta, window)` combination, one rolling backtest is executed producing a list of `BacktestResult` records. The following four scalars are then **aggregated** across all windows in that run
 
 | Metric | Source | Description |
 |---|---|---|
