@@ -56,7 +56,7 @@ Understand how **three key parameters** shape the model's risk estimates by syst
 ---
 
 #### Correlation Window `W` (days)
-> Sets the lookback for both the rolling correlation network and HMM initialization.
+> Sets the lookback for both the rolling correlation network and HMM initialization
 
 | Level | Value | Interpretation |
 |---|---|---|
