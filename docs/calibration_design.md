@@ -20,7 +20,7 @@ Understand how **three key parameters** shape the model's risk estimates by syst
 ### 2.1 Recommended Ranges & Rationale
 
 #### `alpha` — Contagion Strength
-> Controls the multiplier `σ_j *= (1 + α · A_ij)` applied to connected assets during a stress event.
+> Controls the multiplier `σ_j *= (1 + α · A_ij)` applied to connected assets during a stress event
 
 | Level | Value | Interpretation |
 |---|---|---|
