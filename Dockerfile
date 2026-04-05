@@ -1,5 +1,5 @@
 # ─────────────────────────────────────────────────────────────────────────────
-# Regime-Switching Monte Carlo — Docker Image
+# Regime-Switching Monte Carlo — Docker Image.
 # ─────────────────────────────────────────────────────────────────────────────
 # Stage 1 — dependency builder (keeps final image lean)
 # ─────────────────────────────────────────────────────────────────────────────
