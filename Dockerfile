@@ -1,7 +1,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # Regime-Switching Monte Carlo — Docker Image.
 # ─────────────────────────────────────────────────────────────────────────────
-# Stage 1 — dependency builder (keeps final image lean)
+# Stage 1 — dependency builder (keeps final image lean).
 # ─────────────────────────────────────────────────────────────────────────────
 FROM python:3.11-slim AS builder
 
