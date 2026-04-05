@@ -33,7 +33,7 @@ LABEL maintainer="Maruf" \
       description="Regime-switching Monte Carlo systemic risk engine" \
       version="0.1.0"
 
-# Runtime system libraries (no build tools — keeps image small)
+# Runtime system libraries (no build tools — keeps image small).
 RUN apt-get update && apt-get install -y --no-install-recommends \
         libopenblas0 \
         libgomp1 \
