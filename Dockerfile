@@ -39,7 +39,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy installed packages from builder stage
+# Copy installed packages from builder stage.
 COPY --from=builder /install /usr/local
 
 WORKDIR /app
