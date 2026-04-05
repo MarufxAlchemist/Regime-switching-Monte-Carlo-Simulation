@@ -16,7 +16,7 @@ Usage:
     python main.py
 
 Output:
-    Structured dict printed to stdout + log file.
+    Structured dict printed to stdout + log file
 """
 
 from __future__ import annotations
