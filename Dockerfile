@@ -44,7 +44,7 @@ COPY --from=builder /install /usr/local
 
 WORKDIR /app
 
-# Copy the entire project.
+# Copy the entire project
 COPY . .
 
 # Create a non-root user for security
