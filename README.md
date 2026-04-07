@@ -14,7 +14,7 @@ A research-grade Python pipeline designed to analyze and simulate systemic risk 
 The engine runs a sequential daily simulation pipeline over a 252-day trading year (for 5,000 parallel paths) evaluating 10 major Indian equities across diverse sectors.
 
 1. **Market Regime Detection (HMM)**
-   Uses a 3-state Gaussian Hidden Markov Model on historical log returns to classify the current market environment as either **Bull**, **Bear**, or **Crisis**.
+   Uses a 3-state Gaussian Hidden Markov Model on historical log returns to classify the current market environment as either **Bull**, **Bear**, or **Crisis**
    
    ![HMM Regime Plot](./models/regime/regime_plot.png)
 
