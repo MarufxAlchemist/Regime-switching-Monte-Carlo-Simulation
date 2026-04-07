@@ -32,7 +32,7 @@ The engine runs a sequential daily simulation pipeline over a 252-day trading ye
    ![Contagion Propagation Plot](./models/network/contagion_plot.png)
 
 5. **Advanced Risk Metrics**
-   Extracts standard and portfolio-level risk measures from the simulated terminal paths, including **95% Value at Risk (VaR)**, **Expected Shortfall (ES)**, and the probability of a multi-sector **Systemic Crash**.
+   Extracts standard and portfolio-level risk measures from the simulated terminal paths, including **95% Value at Risk (VaR)**, **Expected Shortfall (ES)**, and the probability of a multi-sector **Systemic Crash**
 
 ---
 
