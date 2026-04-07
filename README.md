@@ -24,7 +24,7 @@ The engine runs a sequential daily simulation pipeline over a 252-day trading ye
    ![Network Topology Plot](./models/network/network_plot.png)
 
 3. **Sentiment Analysis (FinBERT)**
-   Scrapes recent financial headlines and runs them through a transformer-based NLP model to generate a bullish/bearish aggregate tone, which alters the expected drift ($\mu$) and volatility ($\sigma$) in the fundamental simulation math.
+   Scrapes recent financial headlines and runs them through a transformer-based NLP model to generate a bullish/bearish aggregate tone, which alters the expected drift ($\mu$) and volatility ($\sigma$) in the fundamental simulation math
 
 4. **Contagion-Adjusted Monte Carlo**
    Simulates 5,000 future price paths using Geometric Brownian Motion (GBM). If a severe negative statistical event occurs on specific stock paths, a mathematically constructed domino effect (contagion) spikes the volatility of highly correlated neighboring stocks on the network graph.
