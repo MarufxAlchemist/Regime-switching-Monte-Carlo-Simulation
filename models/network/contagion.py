@@ -40,7 +40,7 @@ CORR_THRESH  = 0.50
 
 # MC params
 N_PATHS      = 2000
-N_STEPS      = 252          # 1 year of daily steps
+N_STEPS      = 252          # 1 year of daily steps.
 DT           = 1 / 252
 
 # Contagion params
