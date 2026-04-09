@@ -33,7 +33,7 @@ Understand how **three key parameters** shape the model's risk estimates by syst
 **Grid:** `[0.10, 0.20, 0.40, 0.60, 0.80]` — 5 levels
 
 > [!NOTE]
-> Values above 0.80 push sigma beyond the `vol_cap * sig0` ceiling on nearly every step, making the cap (not alpha) the binding constraint — avoid.
+> Values above 0.80 push sigma beyond the `vol_cap * sig0` ceiling on nearly every step, making the cap (not alpha) the binding constraint — avoid
 
 ---
 
