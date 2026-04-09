@@ -69,7 +69,7 @@ Understand how **three key parameters** shape the model's risk estimates by syst
 **Grid:** `[20, 40, 60, 90, 120]` — 5 levels
 
 > [!CAUTION]
-> Window sizes below 20 risk rank-deficient correlation matrices (you have 10 assets), causing eigenvector centrality failures. Stay at or above 20.
+> Window sizes below 20 risk rank-deficient correlation matrices (you have 10 assets), causing eigenvector centrality failures. Stay at or above 20
 
 ---
 
