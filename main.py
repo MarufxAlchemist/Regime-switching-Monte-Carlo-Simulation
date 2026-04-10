@@ -645,6 +645,10 @@ def main(
     # ── 8. Dashboard plot ─────────────────────────────────────────────────────
     plot_dashboard(paths, S0, risk, run_cfg)
 
+    # ── 9. 3D Monte Carlo surface ─────────────────────────────────────────────
+    from dashboard.monte_carlo_3d import plot_3d_surface
+    plot_3d_surface(paths)
+
     t_end = time.time()
     log.info("=" * 70)
     log.info("  Pipeline complete in %.2f s", t_end - t_start)
