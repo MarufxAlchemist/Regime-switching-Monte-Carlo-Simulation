@@ -647,7 +647,7 @@ def main(
 
     # ── 9. 3D Monte Carlo surface ─────────────────────────────────────────────
     from dashboard.monte_carlo_3d import plot_3d_surface
-    plot_3d_surface(paths)
+    plot_3d_surface(paths, tickers=run_cfg["tickers"])
 
     t_end = time.time()
     log.info("=" * 70)
