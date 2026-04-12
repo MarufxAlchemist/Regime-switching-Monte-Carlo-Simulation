@@ -38,7 +38,7 @@ All three models must operate under **identical conditions** to ensure fair comp
 | Equal-weight portfolio return | $r_t = \frac{1}{N}\sum_{i=1}^{N} r_{t,i}$ (cumulative over 30-day forward window) |
 
 > [!IMPORTANT]
-> The use of the **same random seed per origin** is critical: it eliminates Monte Carlo noise as a confounding factor, isolating the contribution of each model's structural component (regime detection, contagion, sentiment).
+> The use of the **same random seed per origin** is critical: it eliminates Monte Carlo noise as a confounding factor, isolating the contribution of each model's structural component (regime detection, contagion, sentiment)
 
 ---
 
