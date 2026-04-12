@@ -86,7 +86,7 @@ A correctly calibrated model has $\hat{p}_m \approx \alpha = 0.05$.
 
 **Interpretation**:
 - $\hat{p}_m \gg \alpha$: Model $m$ systematically under-estimates risk.
-- $\hat{p}_m \ll \alpha$: Model $m$ is overly conservative.
+- $\hat{p}_m \ll \alpha$: Model $m$ is overly conservative
 
 ### 4.2  Kupiec Proportion of Failures (POF) test
 
