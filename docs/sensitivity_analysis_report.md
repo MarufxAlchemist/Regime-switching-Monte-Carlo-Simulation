@@ -83,7 +83,7 @@ As predicted in the experimental design, **β has identically zero effect** acro
 **Root cause:** The backtest pipeline fixes sentiment to `S = 0.0` (neutral) at every origin ([calibration.py, line 88](file:///e:/Maruf%20data/Antigravity/Regime-switching-Monte-Carlo-Simulation/models/calibration.py#L88)). Since the volatility adjustment formula is `σ_adj = σ × (1 + β · |S|)`, and `|S| = 0`, the β term evaluates to zero regardless of its value.
 
 > [!IMPORTANT]
-> **β is structurally unidentifiable in the current backtest framework.** This is not a statement about sentiment's economic importance — it is an artefact of the experimental design. To make β-sensitivity measurable, extend the pipeline with a historical sentiment time series.
+> **β is structurally unidentifiable in the current backtest framework.** This is not a statement about sentiment's economic importance — it is an artefact of the experimental design. To make β-sensitivity measurable, extend the pipeline with a historical sentiment time series
 
 ### Expected Behaviour with Live Sentiment
 
