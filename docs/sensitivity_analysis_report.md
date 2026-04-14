@@ -66,7 +66,7 @@ The **diminishing marginal effect** at higher α confirms vol-cap saturation: th
 
 ---
 
-## 2. How Does β (Sentiment Amplification) Affect Tail Risk?
+## 2. How Does β (Sentiment Amplification) Affect Tail Risk?!
 
 ### Empirical Results
 
