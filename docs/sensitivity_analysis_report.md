@@ -140,7 +140,7 @@ Examining the VaR surface jointly across α and W (averaged over β, which has n
 | **α = 0.40** | −0.00786 | −0.00727 | −0.00719 | 0.00067 |
 | **α = 0.70** | −0.00981 | −0.00906 | −0.00897 | 0.00084 |
 
-The spread between W = 30 and W = 90 **widens monotonically** as α increases: 0.13 bp → 0.67 bp → 0.84 bp. This confirms a **positive α × W interaction**: contagion strength has a larger marginal effect when the correlation window is short (producing denser networks with more contagion channels).
+The spread between W = 30 and W = 90 **widens monotonically** as α increases: 0.13 bp → 0.67 bp → 0.84 bp. This confirms a **positive α × W interaction**: contagion strength has a larger marginal effect when the correlation window is short (producing denser networks with more contagion channels)
 
 This reproduces the Acemoglu, Ozdaglar & Tahbaz-Salehi (2015) phase-transition mechanism — **connectivity amplifies the marginal impact of contagion intensity**. In sparse networks (long windows), even high α has few channels through which to propagate. In dense networks (short windows), contagion cascades self-reinforce.
 
