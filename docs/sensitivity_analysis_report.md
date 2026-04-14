@@ -3,7 +3,7 @@
 
 ---
 
-## 0. Experimental Setup
+## 0. Experimental Setup.
 
 | Setting | Value |
 |---|---|
