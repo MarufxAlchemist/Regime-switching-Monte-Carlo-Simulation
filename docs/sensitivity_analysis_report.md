@@ -55,7 +55,7 @@ This is consistent with the theoretical expectation from the contagion propagati
 
 **Violation rate declines monotonically** from 33.3% → 27.8% as α increases. Stronger contagion assumptions produce more conservative VaR estimates that are violated less frequently. The Kupiec LR statistic correspondingly decreases from 28.53 to a range of 16.20–24.15, indicating the model's unconditional coverage *improves* with α but remains far from acceptable.
 
-### Rate of Change (Concavity)
+### Rate of Change (Concavity).
 
 | Interval | Δα | ΔVAR | Marginal effect per 0.10 |
 |---|---|---|---|
