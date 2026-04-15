@@ -137,7 +137,7 @@ class TestViolationLogic:
         cfg = BacktestConfig(
             min_train_days=200, step_size=100, forecast_horizon=30,
         )
-        # VaR = -0.01 → realized ≈ -1.5, so violation must be True
+        # VaR = -0.01 → realized ≈ -1.5, so violation must be True.
         bt = RollingBacktester(ret, _stub_pipeline(var_value=-0.01), cfg)
         results = bt.run()
 
