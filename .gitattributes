@@ -1,0 +1,7 @@
+# Exclude generated HTML output from GitHub language stats
+*.html linguist-generated=true
+*.html linguist-detectable=false
+
+# Exclude dashboard output files from language stats
+dashboard/* linguist-generated=true
+dashboard/* linguist-detectable=false
