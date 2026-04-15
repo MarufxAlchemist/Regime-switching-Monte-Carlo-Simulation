@@ -7,7 +7,7 @@ actual systemic-risk pipeline stages from main.py.
 For each grid point a lightweight expanding-window backtest is performed
 and the following metrics are recorded per trial:
   - VaR violation rate, average VaR, average realised loss
-  - Mean systemic crash probability
+  - Mean systemic crash probability.
   - Kupiec POF test and Christoffersen conditional-coverage test.
 
 Output:  data/calibration_results.csv
