@@ -54,7 +54,7 @@ STEP_SIZE          = 20                # advance 20 days between origins
 FORECAST_HORIZON   = 30               # 30-day forward evaluation
 MC_N_PATHS         = 2000             # paths per MC simulation
 MC_N_STEPS         = 30               # steps per path
-HMM_N_ITER         = 100              # reduced HMM iterations for speed
+HMM_N_ITER         = 100              # reduced HMM iterations for speed.
 
 
 # Single-origin pipeline evaluation
