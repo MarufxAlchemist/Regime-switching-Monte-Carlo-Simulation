@@ -4,7 +4,7 @@
 
 ## 1  Scope and Objective
 
-This document specifies the design of a controlled rolling-backtest experiment to compare three systemic risk Monte Carlo models across statistical and economic performance dimensions.
+This document specifies the design of a controlled rolling-backtest experiment to compare three systemic risk Monte Carlo models across statistical and economic performance dimensions
 
 | ID | Model | Description |
 |---|---|---|
@@ -38,7 +38,7 @@ All three models must operate under **identical conditions** to ensure fair comp
 | Equal-weight portfolio return | $r_t = \frac{1}{N}\sum_{i=1}^{N} r_{t,i}$ (cumulative over 30-day forward window) |
 
 > [!IMPORTANT]
-> The use of the **same random seed per origin** is critical: it eliminates Monte Carlo noise as a confounding factor, isolating the contribution of each model's structural component (regime detection, contagion, sentiment).
+> The use of the **same random seed per origin** is critical: it eliminates Monte Carlo noise as a confounding factor, isolating the contribution of each model's structural component (regime detection, contagion, sentiment)
 
 ---
 
@@ -53,7 +53,7 @@ All three models must operate under **identical conditions** to ensure fair comp
 |   Burn-in (min 252 days)    Rolling evaluation period        |
 ```
 
-- **Burn-in period**: Used only to satisfy the minimum training window. No performance metrics are computed here.
+- **Burn-in period**: Used only to satisfy the minimum training window. No performance metrics are computed here
 - **Rolling evaluation period**: Every 5 trading days, a new forecast origin is created. Performance metrics are computed over all forecast origins in this period.
 
 ### 3.2  Storage schema
@@ -86,7 +86,7 @@ A correctly calibrated model has $\hat{p}_m \approx \alpha = 0.05$.
 
 **Interpretation**:
 - $\hat{p}_m \gg \alpha$: Model $m$ systematically under-estimates risk.
-- $\hat{p}_m \ll \alpha$: Model $m$ is overly conservative.
+- $\hat{p}_m \ll \alpha$: Model $m$ is overly conservative
 
 ### 4.2  Kupiec Proportion of Failures (POF) test
 

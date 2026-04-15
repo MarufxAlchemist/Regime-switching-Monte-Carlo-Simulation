@@ -2,7 +2,7 @@
 Unit tests for ``models.backtest_engine``
 =========================================
 All tests use synthetic data and stub pipelines — no live data, GPU, or
-heavy model fitting required.  Total runtime ≈ 1 s.
+heavy model fitting required.  Total runtime ≈ 1 s
 """
 
 from __future__ import annotations
@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-# ── fixtures ────────────────────────────────────────────────────────────────
+# ── fixtures ───────────────────────
 
 def _make_returns(
     n_days: int = 300,
@@ -111,7 +111,7 @@ class TestViolationLogic:
             train_start=datetime(2023, 1, 1),
             train_size=252,
             predicted_var_95=-0.05,
-            realized_loss=-0.08,  # worse than VaR
+            realized_loss=-0.08,  # worse than VaR.
             violation=True,
         )
         assert r.violation is True
@@ -137,7 +137,7 @@ class TestViolationLogic:
         cfg = BacktestConfig(
             min_train_days=200, step_size=100, forecast_horizon=30,
         )
-        # VaR = -0.01 → realized ≈ -1.5, so violation must be True
+        # VaR = -0.01 → realized ≈ -1.5, so violation must be True.
         bt = RollingBacktester(ret, _stub_pipeline(var_value=-0.01), cfg)
         results = bt.run()
 
