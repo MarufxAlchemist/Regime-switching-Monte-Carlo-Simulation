@@ -111,7 +111,7 @@ class TestViolationLogic:
             train_start=datetime(2023, 1, 1),
             train_size=252,
             predicted_var_95=-0.05,
-            realized_loss=-0.08,  # worse than VaR
+            realized_loss=-0.08,  # worse than VaR.
             violation=True,
         )
         assert r.violation is True
