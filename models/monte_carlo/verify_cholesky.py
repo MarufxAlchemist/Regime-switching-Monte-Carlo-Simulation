@@ -31,7 +31,6 @@ import numpy as np
 
 torch.manual_seed(42)
 
-# ── Setup ────────────────────────────────────────────────────────────────────
 num_paths  = 50_000
 num_assets = 7
 
@@ -39,18 +38,14 @@ num_assets = 7
 raw   = torch.randn(num_assets, num_assets) * 0.02
 Sigma = raw @ raw.T + torch.eye(num_assets) * 0.01
 
-# ── Cholesky factorisation ────────────────────────────────────────────────────
 L = torch.linalg.cholesky(Sigma)          # Σ = L @ L.T
 
-# ── Generate samples ─────────────────────────────────────────────────────────
 W            = torch.randn(num_paths, num_assets)   # Z ~ N(0, I)
 correlated_W = W @ L.T                              # X = Z L^T
 
 sep = "=" * 60
 
-# ─────────────────────────────────────────────────────────────────────────────
 # TEST 1 – Reconstruction:  L @ L.T  should equal  Σ
-# ─────────────────────────────────────────────────────────────────────────────
 print(sep)
 print("TEST 1 – Reconstruction: Σ ≈ L @ L.T")
 print(sep)
@@ -59,9 +54,7 @@ max_err = (Sigma - Sigma_reconstructed).abs().max().item()
 print(f"  Max absolute error |Σ - L@L.T|: {max_err:.2e}")
 print(f"  PASS ✓" if max_err < 1e-5 else "  FAIL ✗")
 
-# ─────────────────────────────────────────────────────────────────────────────
 # TEST 2 – Sample covariance of correlated_W should converge to Σ
-# ─────────────────────────────────────────────────────────────────────────────
 print()
 print(sep)
 print("TEST 2 – Sample covariance ≈ Σ  (N = {:,})".format(num_paths))
@@ -76,9 +69,7 @@ print(Sigma[:3, :3].numpy().round(6))
 print("\n  Sample Cov (first 3×3 block):")
 print(sample_cov[:3, :3].numpy().round(6))
 
-# ─────────────────────────────────────────────────────────────────────────────
 # TEST 3 – Marginal normality: each column ~ N(0, Σ_ii)
-# ─────────────────────────────────────────────────────────────────────────────
 print()
 print(sep)
 print("TEST 3 – Marginal statistics per asset")
@@ -97,9 +88,7 @@ for i in range(num_assets):
     print(f"  Asset {i+1:<3} {mean_val:>10.6f} {var_val:>12.6f} {true_var:>12.6f} {err:>9.6f}  {flag}")
 print(f"  {'PASS ✓' if all_pass else 'FAIL ✗'}")
 
-# ─────────────────────────────────────────────────────────────────────────────
 # TEST 4 – Sample correlation matrix ≈ true correlation matrix
-# ─────────────────────────────────────────────────────────────────────────────
 print()
 print(sep)
 print("TEST 4 – Sample correlation ≈ True correlation")
@@ -120,9 +109,7 @@ print(true_corr[:4, :4].numpy().round(4))
 print("\n  Sample correlation (first 4×4 block):")
 print(sample_corr[:4, :4].numpy().round(4))
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Summary
-# ─────────────────────────────────────────────────────────────────────────────
 print()
 print(sep)
 print("SUMMARY")

@@ -3,10 +3,6 @@ import plotly.graph_objects as go
 import webbrowser
 import os
 
-
-
-
-
 def plot_3d_surface(
     simulated_paths: np.ndarray,
     tickers: list[str] | None = None,
@@ -37,7 +33,6 @@ def plot_3d_surface(
     if tickers is None:
         tickers = [f"Asset {i}" for i in range(n_assets)]
 
-    # ── Per-asset z-ranges for proper scaling ──────────────────────────────────
     z_ranges = {}
     for k in range(n_assets):
         d = simulated_paths[:n_p, :, k]
@@ -49,7 +44,6 @@ def plot_3d_surface(
     if timesteps[-1] != n_t - 1:
         timesteps.append(n_t - 1)
 
-    # ── Helper: surface for one asset up to time t_end ────────────────────────
     def make_surface(asset_idx: int, t_end: int) -> go.Surface:
         z = simulated_paths[:n_p, : t_end + 1, asset_idx]
         X, Y = np.meshgrid(np.arange(t_end + 1), np.arange(n_p))
@@ -62,16 +56,13 @@ def plot_3d_surface(
             showscale=True,
         )
 
-    # ── Initial figure — asset 0, full timeline ──────────────────────────────
     fig = go.Figure(data=[make_surface(0, n_t - 1)])
 
-    # ── Frames: grow surface over time (default asset 0) ─────────────────────
     fig.frames = [
         go.Frame(data=[make_surface(0, t)], name=str(t))
         for t in timesteps
     ]
 
-    # ── Slider steps ─────────────────────────────────────────────────────────
     slider_steps = [
         dict(
             method="animate",
@@ -88,7 +79,6 @@ def plot_3d_surface(
         for t in timesteps
     ]
 
-    # ── Multi-sector dropdown buttons ─────────────────────────────────────────
     sector_buttons = []
     for k, ticker in enumerate(tickers):
         surface = make_surface(k, n_t - 1)
@@ -105,7 +95,6 @@ def plot_3d_surface(
             )
         )
 
-    # ── Layout ────────────────────────────────────────────────────────────────
     fig.update_layout(
         title=dict(
             text=f"Monte Carlo 3D Surface | {n_p} paths × {n_t - 1} steps",
@@ -129,7 +118,6 @@ def plot_3d_surface(
         width=None,
         height=800,
         margin=dict(l=0, r=0, t=60, b=0),
-        # ── Controls ──────────────────────────────────────────────────────────
         updatemenus=[
             # Play / Pause
             dict(
@@ -173,7 +161,6 @@ def plot_3d_surface(
                 buttons=sector_buttons,
             ),
         ],
-        # ── Time slider ───────────────────────────────────────────────────────
         sliders=[
             dict(
                 active=0,
@@ -185,7 +172,6 @@ def plot_3d_surface(
         ],
     )
 
-    # ── Write fullscreen HTML with auto-rotate JS ─────────────────────────────
     out_path = os.path.join(
         os.path.dirname(os.path.abspath(__file__)),
         "monte_carlo_fullscreen.html",

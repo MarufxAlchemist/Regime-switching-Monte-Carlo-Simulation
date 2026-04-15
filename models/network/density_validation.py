@@ -14,7 +14,6 @@ import warnings
 warnings.filterwarnings("ignore")
 from hmmlearn import hmm
 
-# ── Config ────────────────────────────────────────────────────────────────────
 TICKERS = ["JPM","BAC","GS","MS","C","XOM","CVX","AAPL","MSFT","NVDA"]
 START, END   = "2015-01-01", "2024-12-31"   # extended to capture GFC aftermath & COVID
 WINDOW       = 60
@@ -27,7 +26,6 @@ CRISIS_WINDOWS = [
     ("2022-01-01", "2022-10-15",  "Rate Hike\nBear"),
 ]
 
-# ── Download & returns ────────────────────────────────────────────────────────
 print("Downloading data ...")
 raw  = yf.download(TICKERS, start=START, end=END, auto_adjust=True, progress=False)["Close"].dropna()
 rets = np.log(raw / raw.shift(1)).dropna()
@@ -35,7 +33,6 @@ T    = len(rets)
 dates_all = rets.index
 print(f"  {T} days")
 
-# ── Rolling 60d correlation → graph → density ─────────────────────────────────
 print("Computing rolling density ...")
 density_ts = {}
 for i, date in enumerate(dates_all[WINDOW - 1:]):
@@ -53,7 +50,6 @@ for i, date in enumerate(dates_all[WINDOW - 1:]):
 density = pd.Series(density_ts)
 print(f"  Done. Mean={density.mean():.4f}  Max={density.max():.4f}")
 
-# ── Quantitative crisis spike check ──────────────────────────────────────────
 print("\n── Crisis spike validation ──────────────────────────────────────────")
 baseline = density.mean()
 print(f"  Baseline mean density (full period): {baseline:.4f}\n")
@@ -69,7 +65,6 @@ for s, e, label in CRISIS_WINDOWS:
     name   = label.replace("\n", " ")
     print(f"  {name:<22} {avg:>12.4f}  {pct:>+11.1f}%  {spike:>8}")
 
-# ── Plot ──────────────────────────────────────────────────────────────────────
 fig, ax = plt.subplots(figsize=(16, 6), facecolor="#0f1117")
 ax.set_facecolor("#0f1117")
 for spine in ax.spines.values():

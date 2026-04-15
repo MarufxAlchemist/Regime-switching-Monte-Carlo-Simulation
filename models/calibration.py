@@ -25,7 +25,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-# ── Path setup (script lives in models/, project root is one level up) ────────
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
@@ -42,9 +41,7 @@ import validation_tests as vt
 
 log = logging.getLogger("calibration")
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Configuration
-# ─────────────────────────────────────────────────────────────────────────────
 
 # Parameter grid
 ALPHAS  = [0.10, 0.40, 0.70]           # contagion strength
@@ -60,9 +57,7 @@ MC_N_STEPS         = 30               # steps per path
 HMM_N_ITER         = 100              # reduced HMM iterations for speed
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Single-origin pipeline evaluation
-# ─────────────────────────────────────────────────────────────────────────────
 
 def evaluate_origin(
     returns: pd.DataFrame,
@@ -79,7 +74,6 @@ def evaluate_origin(
     train = returns.iloc[:origin_idx]
     forward = returns.iloc[origin_idx : origin_idx + horizon]
 
-    # ── Pipeline stages ───────────────────────────────────────────────────
     regime_result  = detect_regime(train, run_cfg)
     network_result = build_network(train, run_cfg)
 
@@ -92,7 +86,6 @@ def evaluate_origin(
     paths, _, _ = run_simulation(S0_proxy, params, network_result, run_cfg)
     risk = compute_risk_metrics(paths, S0_proxy, run_cfg)
 
-    # ── Realised forward return (equal-weight portfolio) ──────────────────
     daily_portfolio = forward.mean(axis=1)
     realized_loss   = float(daily_portfolio.sum())
 
@@ -110,9 +103,7 @@ def evaluate_origin(
     }
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Rolling backtest for one parameter combination
-# ─────────────────────────────────────────────────────────────────────────────
 
 def run_trial(
     returns: pd.DataFrame,
@@ -138,7 +129,6 @@ def run_trial(
         "crash_threshold": -0.05,       # relaxed from -0.10 for detectability
     }
 
-    # Compute valid origins
     first_origin = MIN_TRAIN_DAYS
     last_origin  = T - FORECAST_HORIZON
     if first_origin > last_origin:
@@ -148,7 +138,6 @@ def run_trial(
         )
     origins = list(range(first_origin, last_origin + 1, STEP_SIZE))
 
-    # ── Walk-forward loop ─────────────────────────────────────────────────
     window_results = []
     for i, t in enumerate(origins):
         try:
@@ -175,7 +164,6 @@ def run_trial(
             "error": "All origins failed",
         }
 
-    # ── Aggregate metrics ─────────────────────────────────────────────────
     violations     = np.array([int(r["violation"]) for r in window_results])
     vars_          = np.array([r["predicted_var_95"] for r in window_results])
     losses         = np.array([r["realized_loss"] for r in window_results])
@@ -184,7 +172,6 @@ def run_trial(
     n_violations   = int(violations.sum())
     violation_rate = n_violations / n_origins
 
-    # ── Validation tests ──────────────────────────────────────────────────
     kupiec = vt.kupiec_pof_test(violations, alpha=0.05)
     cc     = vt.christoffersen_conditional_coverage_test(violations, alpha=0.05)
 
@@ -207,9 +194,7 @@ def run_trial(
     }
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Main entry point
-# ─────────────────────────────────────────────────────────────────────────────
 
 def main():
     t_start = time.time()
@@ -218,12 +203,10 @@ def main():
     print("  SENSITIVITY CALIBRATION — Parameter Grid Sweep")
     print("=" * 70)
 
-    # ── 1. Load data once ─────────────────────────────────────────────────
     print("\n[1/3] Loading market data...")
     prices, returns, S0 = load_data(CONFIG)
     print(f"  Loaded: {returns.shape[0]} days × {returns.shape[1]} assets")
 
-    # ── 2. Run grid ───────────────────────────────────────────────────────
     grid  = list(product(ALPHAS, BETAS, WINDOWS))
     total = len(grid)
     print(f"\n[2/3] Running {total} trials  "
@@ -250,7 +233,6 @@ def main():
                   f"crash_prob={row['mean_crash_prob']:.4f}  "
                   f"({elapsed:.0f}s)")
 
-    # ── 3. Save ───────────────────────────────────────────────────────────
     output_path = PROJECT_ROOT / "data" / "calibration_results.csv"
     output_path.parent.mkdir(parents=True, exist_ok=True)
     df = pd.DataFrame(all_rows)

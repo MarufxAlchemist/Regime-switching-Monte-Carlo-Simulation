@@ -27,9 +27,7 @@ import yfinance as yf
 import warnings
 warnings.filterwarnings("ignore")
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Config
-# ─────────────────────────────────────────────────────────────────────────────
 TICKERS      = ["JPM", "BAC", "GS", "MS", "C", "XOM", "CVX", "AAPL", "MSFT", "NVDA"]
 SECTORS      = ["Bank","Bank","Bank","Bank","Bank","Energy","Energy","Tech","Tech","Tech"]
 N_ASSETS     = len(TICKERS)
@@ -48,9 +46,7 @@ ALPHA        = 0.40         # amplification per unit of edge weight
 THETA_Z      = -1.5        # z-score threshold: fire if z < -1.5 (≈ 7% of steps)
 BETA         = 0.05         # mean-reversion speed
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 1. Download data + compute baseline parameters
-# ─────────────────────────────────────────────────────────────────────────────
 print("Downloading data ...")
 raw  = yf.download(TICKERS, start=START, end=END, auto_adjust=True, progress=False)["Close"].dropna()
 rets = np.log(raw / raw.shift(1)).dropna()
@@ -66,9 +62,7 @@ corr_last = rets.tail(CORR_WINDOW).corr().values  # (N, N)
 print(f"  Assets: {TICKERS}")
 print(f"  Baseline ann. vol: {dict(zip(TICKERS, (SIG_ANNUAL*100).round(1)))}")
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 2. Build adjacency matrix A from correlation network
-# ─────────────────────────────────────────────────────────────────────────────
 A = np.zeros((N_ASSETS, N_ASSETS))
 for i in range(N_ASSETS):
     for j in range(N_ASSETS):
@@ -78,9 +72,7 @@ for i in range(N_ASSETS):
 n_edges = int((A > 0).sum() / 2)
 print(f"  Network: {n_edges} edges  (|corr| > {CORR_THRESH})")
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 3. MC simulation — Standard GBM (baseline)
-# ─────────────────────────────────────────────────────────────────────────────
 def run_mc_standard(S0, mu, sigma, N_paths, N_steps, dt, seed=0):
     """
     Standard GBM — fixed σ throughout.
@@ -100,9 +92,7 @@ def run_mc_standard(S0, mu, sigma, N_paths, N_steps, dt, seed=0):
     return paths
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 4. MC simulation — Contagion-Amplified GBM
-# ─────────────────────────────────────────────────────────────────────────────
 def run_mc_contagion(S0, mu, sigma0, A, N_paths, N_steps, dt,
                      alpha, theta_z, beta, seed=1):
     """
@@ -126,7 +116,6 @@ def run_mc_contagion(S0, mu, sigma0, A, N_paths, N_steps, dt,
     sigma = np.tile(sigma0, (N_paths, 1))           # (N_paths, N)
     vol_trace[:, 0, :] = sigma
 
-    # ── DIAGNOSTICS ───────────────────────────────────────────────────────────
     sigma0_ann = sigma0 * np.sqrt(252)
     A_weights  = A[A > 0]
     n_edges    = len(A_weights) // 2
@@ -164,14 +153,12 @@ def run_mc_contagion(S0, mu, sigma0, A, N_paths, N_steps, dt,
     }
 
     for t in range(N_steps):
-        # ── Step 1: GBM Step ─────────────────────────────────────────────────
         drift = (mu - 0.5 * sigma**2) * dt           # (N_paths, N)
         eps   = rng.standard_normal((N_paths, N))
         paths[:, t + 1, :] = paths[:, t, :] * np.exp(
             drift + sigma * np.sqrt(dt) * eps
         )
 
-        # ── Step 2: Detect crashes (z-score relative) ───────────────────────────
         log_ret  = np.log(paths[:, t + 1, :] / paths[:, t, :])  # (N_paths, N)
         # Standardise: z = log_ret / (σ_i × √dt)   shape (N_paths, N)
         z_score  = log_ret / (sigma * np.sqrt(dt) + 1e-12)
@@ -180,7 +167,6 @@ def run_mc_contagion(S0, mu, sigma0, A, N_paths, N_steps, dt,
         # Count events per asset across paths
         event_counts[t] = stressed.sum(axis=0)
 
-        # ── Step 3: Contagion propagation ─────────────────────────────────────
         # For each stressed path-asset pair (p, i), amplify neighbours j
         # Vectorised: for each asset i, compute the additive vol increase
         # that arrives from stressed predecessors.
@@ -199,14 +185,12 @@ def run_mc_contagion(S0, mu, sigma0, A, N_paths, N_steps, dt,
             # apply to stressed paths only
             sigma[stressed_i] *= amp               # broadcast over paths
 
-        # ── Step 4: Mean-reversion + vol cap ──────────────────────────────────
         sigma = sigma * (1 - beta) + sigma0 * beta
         # Hard cap: σ_j ≤ 5 × σ_j^(0)  →  prevents compounding blow-up
         sigma = np.minimum(sigma, 5.0 * sigma0)
 
         vol_trace[:, t + 1, :] = sigma
 
-        # ── Mid-simulation diagnostics ────────────────────────────────────────
         if t in _snap_steps:
             sig_ann_now = sigma.mean(axis=0) * np.sqrt(252)
             sig_max_now = sigma.max(axis=0)  * np.sqrt(252)
@@ -222,9 +206,7 @@ def run_mc_contagion(S0, mu, sigma0, A, N_paths, N_steps, dt,
     return paths, vol_trace, event_counts
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 5. Run both models
-# ─────────────────────────────────────────────────────────────────────────────
 mu_daily  = MU_ANNUAL / 252
 sig_daily = SIG_ANNUAL / np.sqrt(252)
 
@@ -237,9 +219,7 @@ paths_ctx, vol_trace, event_counts = run_mc_contagion(
     alpha=ALPHA, theta_z=THETA_Z, beta=BETA
 )
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 6. Analysis
-# ─────────────────────────────────────────────────────────────────────────────
 print("\n── Contagion Analysis ────────────────────────────────────────────────")
 print(f"  α={ALPHA}  θ_z={THETA_Z}σ  β={BETA}")
 print(f"\n  {'Asset':<6} {'Baseline σ(ann)':>16} {'Mean σ (contag)':>16} "
@@ -278,9 +258,7 @@ print(f"    Standard  GBM:   {var_std:>+.4f}")
 print(f"    Contagion GBM:   {var_ctx:>+.4f}  "
       f"({'HIGHER' if abs(var_ctx) > abs(var_std) else 'lower'} risk ✓)")
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 7. Plot
-# ─────────────────────────────────────────────────────────────────────────────
 print("\nGenerating plot ...")
 fig, axes = plt.subplots(
     2, 2, figsize=(18, 11),
@@ -303,7 +281,6 @@ days = np.arange(N_STEPS + 1)
 # pick a representative "crisis" path — the one with max contagion events for asset 0
 crisis_path_idx = vol_trace[:, :, 0].max(axis=1).argmax()
 
-# ── A: Price paths comparison ─────────────────────────────────────────────────
 ax = axes[0]
 n_show = 80
 for p in range(min(n_show, N_PATHS)):
@@ -322,7 +299,6 @@ ax.set_xlabel("Days")
 ax.set_ylabel("Normalised Price (S/S₀)")
 ax.legend(facecolor="#1a1a2e", labelcolor="white", fontsize=9)
 
-# ── B: Volatility trace for one path ─────────────────────────────────────────
 ax = axes[1]
 for k_idx, col in zip([0, 5, 9], ["#2ecc71", "#f39c12", "#9b59b6"]):
     vol_path = vol_trace[crisis_path_idx, :, k_idx] * np.sqrt(252)
@@ -337,7 +313,6 @@ ax.set_ylabel("Annualised σ")
 ax.legend(facecolor="#1a1a2e", labelcolor="white", fontsize=9,
           title="Asset", title_fontsize=8)
 
-# ── C: Contagion event heatmap ────────────────────────────────────────────────
 ax = axes[2]
 im = ax.imshow(
     event_counts.T,           # (N_assets, N_steps)
@@ -353,7 +328,6 @@ ax.set_ylabel("Asset")
 plt.colorbar(im, ax=ax, fraction=0.03, pad=0.04,
              label="# paths triggered").ax.yaxis.set_tick_params(color="white")
 
-# ── D: Terminal return distribution ──────────────────────────────────────────
 ax = axes[3]
 bins = np.linspace(-0.8, 1.5, 80)
 ax.hist(t_std, bins=bins, color="#3498db", alpha=0.5, label=f"Standard  (kurt={kurt_std:.2f})")

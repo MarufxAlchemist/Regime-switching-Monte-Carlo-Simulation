@@ -38,9 +38,7 @@ import pandas as pd
 
 log = logging.getLogger("backtest")
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Protocols
-# ─────────────────────────────────────────────────────────────────────────────
 
 class PipelineFn(Protocol):
     """Signature expected by ``RollingBacktester.pipeline_fn``."""
@@ -57,9 +55,7 @@ class PipelineFn(Protocol):
         ...
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Configuration
-# ─────────────────────────────────────────────────────────────────────────────
 
 @dataclass(frozen=True)
 class BacktestConfig:
@@ -105,9 +101,7 @@ class BacktestConfig:
         }
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Per-window result record
-# ─────────────────────────────────────────────────────────────────────────────
 
 @dataclass
 class BacktestResult:
@@ -136,9 +130,7 @@ class BacktestResult:
         return asdict(self)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Core orchestration engine
-# ─────────────────────────────────────────────────────────────────────────────
 
 class RollingBacktester:
     """
@@ -180,7 +172,6 @@ class RollingBacktester:
         self._pipeline_cfg = pipeline_cfg or {}
         self._results: list[BacktestResult] = []
 
-    # ── public API ────────────────────────────────────────────────────────
 
     def run(self) -> list[BacktestResult]:
         """
@@ -310,7 +301,6 @@ class RollingBacktester:
         """Read-only access to the collected backtest results."""
         return list(self._results)
 
-    # ── internals ─────────────────────────────────────────────────────────
 
     @staticmethod
     def _compute_origins(
@@ -342,20 +332,16 @@ class RollingBacktester:
         """
         cfg = self.config
 
-        # ── Expanding training window (no future data leak) ───────────
         train_returns = self.returns.iloc[:t]
 
-        # ── Call user-supplied pipeline ───────────────────────────────
         forecast = self.pipeline_fn(train_returns, merged_cfg)
         predicted_var = float(forecast["var_95"])
 
-        # ── Realised forward return ──────────────────────────────────
         forward_returns = self.returns.iloc[t : t + cfg.forecast_horizon]
         # Cumulative equal-weight portfolio return over the window
         daily_portfolio = forward_returns.mean(axis=1)  # mean across assets
         realized_loss = float(daily_portfolio.sum())     # cumulative return
 
-        # ── Violation flag ───────────────────────────────────────────
         violation = realized_loss < predicted_var
 
         return BacktestResult(
@@ -368,9 +354,7 @@ class RollingBacktester:
         )
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Pipeline factory — wraps main.py stages into a backtest-compatible callable
-# ─────────────────────────────────────────────────────────────────────────────
 
 def make_pipeline_fn(base_cfg: dict[str, Any]) -> Callable[..., dict[str, Any]]:
     """
@@ -410,16 +394,12 @@ def make_pipeline_fn(base_cfg: dict[str, Any]) -> Callable[..., dict[str, Any]]:
 
         run_cfg = {**base_cfg, **cfg}
 
-        # Stage 2 — Regime detection
         regime_result = detect_regime(train_returns, run_cfg)
 
-        # Stage 3 — Correlation network
         network_result = build_network(train_returns, run_cfg)
 
-        # Stage 4 — Sentiment (skip in backtest — default to neutral)
         sentiment_score = 0.0
 
-        # Stage 5 — Parameter adjustment
         params = adjust_parameters(
             train_returns,
             sentiment_score,
@@ -427,7 +407,6 @@ def make_pipeline_fn(base_cfg: dict[str, Any]) -> Callable[..., dict[str, Any]]:
             run_cfg,
         )
 
-        # Stage 6 — Monte Carlo simulation
         S0 = train_returns.iloc[-1].values  # latest available "prices" proxy
         # NOTE: In a full integration the caller should pass actual prices.
         # Here we use exp(cumulative returns) as a price-level proxy.
@@ -435,7 +414,6 @@ def make_pipeline_fn(base_cfg: dict[str, Any]) -> Callable[..., dict[str, Any]]:
 
         paths, _, _ = run_simulation(S0_proxy, params, network_result, run_cfg)
 
-        # Stage 7 — Risk metrics
         risk = compute_risk_metrics(paths, S0_proxy, run_cfg)
 
         return {

@@ -37,9 +37,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Logging
-# ─────────────────────────────────────────────────────────────────────────────
 LOG_FORMAT = "%(asctime)s  %(levelname)-8s  %(message)s"
 logging.basicConfig(
     level=logging.INFO,
@@ -51,11 +49,8 @@ logging.basicConfig(
 )
 log = logging.getLogger("systemic_risk")
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Configuration  (single source of truth — no hardcoded strings elsewhere)
-# ─────────────────────────────────────────────────────────────────────────────
 CONFIG: dict[str, Any] = {
-    # --- Data ---
     "tickers": [
         "RELIANCE.NS", "HDFCBANK.NS", "ICICIBANK.NS", "INFY.NS", "TCS.NS",
         "AXISBANK.NS",  "SBIN.NS",     "ONGC.NS",      "LT.NS",  "BAJFINANCE.NS",
@@ -67,45 +62,35 @@ CONFIG: dict[str, Any] = {
     "start_date":   "2021-01-01",
     "end_date":     "2024-12-31",
 
-    # --- HMM ---
     "hmm_n_states":  3,
     "hmm_n_iter":    300,
     "hmm_corr_win":  60,     # days for HMM initialisation correlation
 
-    # --- Network ---
     "corr_window":   60,
     "corr_threshold": 0.50,
 
-    # --- Sentiment ---
     "finbert_model":  "ProsusAI/finbert",
     "sentiment_alpha": 0.05,   # drift sensitivity
     "sentiment_beta":  0.10,   # vol sensitivity
 
-    # --- Monte Carlo ---
     "mc_n_paths":  5_000,
     "mc_n_steps":  252,        # 1 trading year
     "mc_seed":     42,
 
-    # --- Contagion ---
     "contagion_alpha":   0.40,
     "contagion_theta_z": -1.50,
     "contagion_beta":    0.05,
     "contagion_vol_cap": 5.0,
 
-    # --- Risk ---
     "var_confidence":     0.95,
     "crash_threshold":   -0.10,   # sector drops >10% in simulation horizon.
     "crash_n_sectors":    3,      # systemic = N sectors crash simultaneously.
 
-    # --- GPU ---
     "device": "cuda" if torch.cuda.is_available() else "cpu",
 }
 
 REGIME_NAMES = {0: "Bull", 1: "Bear", 2: "Crisis"}
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Stage 1 — Data Loading
-# ─────────────────────────────────────────────────────────────────────────────
 def load_data(cfg: dict) -> tuple[pd.DataFrame, pd.DataFrame, np.ndarray]:
     """
     Download OHLCV data and compute log returns.
@@ -136,9 +121,6 @@ def load_data(cfg: dict) -> tuple[pd.DataFrame, pd.DataFrame, np.ndarray]:
     return raw, returns, S0
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Stage 2 — HMM Regime Detection
-# ─────────────────────────────────────────────────────────────────────────────
 def detect_regime(returns: pd.DataFrame, cfg: dict) -> dict:
     """
     Fit 3-state Gaussian HMM on daily returns and decode the current regime.
@@ -160,7 +142,6 @@ def detect_regime(returns: pd.DataFrame, cfg: dict) -> dict:
     N   = cfg["hmm_n_states"]
     n   = obs.shape[1]
 
-    # ── Quantile-based mean seed (Bull = top 20%, Crisis = bottom 20%) ────────
     scalar    = obs.mean(axis=1)
     q20, q80  = np.percentile(scalar, 20), np.percentile(scalar, 80)
     mu_bull   = obs[scalar >= q80].mean(axis=0)
@@ -219,9 +200,6 @@ def detect_regime(returns: pd.DataFrame, cfg: dict) -> dict:
     }
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Stage 3 — Correlation Network
-# ─────────────────────────────────────────────────────────────────────────────
 def build_network(returns: pd.DataFrame, cfg: dict) -> dict:
     """
     Compute rolling correlation network on the last `corr_window` days.
@@ -285,9 +263,6 @@ def build_network(returns: pd.DataFrame, cfg: dict) -> dict:
     }
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Stage 4 — Sentiment Scoring (FinBERT)
-# ─────────────────────────────────────────────────────────────────────────────
 def compute_sentiment(headlines: list[str], cfg: dict) -> dict:
     """
     Score a list of financial headlines with FinBERT.
@@ -342,9 +317,6 @@ def compute_sentiment(headlines: list[str], cfg: dict) -> dict:
         return {"aggregate_score": 0.0, "per_headline": [], "tone": "neutral"}
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Stage 5 — Sentiment-Adjusted GBM Parameters
-# ─────────────────────────────────────────────────────────────────────────────
 def adjust_parameters(
     returns: pd.DataFrame,
     sentiment_score: float,
@@ -394,9 +366,6 @@ def adjust_parameters(
     }
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Stage 6 — Contagion-Adjusted Monte Carlo
-# ─────────────────────────────────────────────────────────────────────────────
 def run_simulation(
     S0: np.ndarray,
     params: dict,
@@ -474,9 +443,6 @@ def run_simulation(
     return paths, vol_trace, event_counts
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Stage 7 — Risk Metrics
-# ─────────────────────────────────────────────────────────────────────────────
 def compute_risk_metrics(
     paths: np.ndarray,
     S0: np.ndarray,
@@ -510,20 +476,17 @@ def compute_risk_metrics(
     # Terminal log returns per path × asset
     terminal_ret = np.log(paths[:, -1, :] / S0)          # (N_paths, N_assets)
 
-    # ── Portfolio VaR and ES  (equal-weight portfolio) ────────────────────────
     port_ret = terminal_ret.mean(axis=1)                  # (N_paths,)
     var_95   = float(np.percentile(port_ret, q * 100))
     es_mask  = port_ret <= var_95
     es       = float(port_ret[es_mask].mean()) if es_mask.any() else var_95
 
-    # ── Per-asset VaR and ES ─────────────────────────────────────────────────
     per_var = np.percentile(terminal_ret, q * 100, axis=0)   # (N,)
     per_es  = np.array([
         terminal_ret[terminal_ret[:, k] <= per_var[k], k].mean()
         for k in range(terminal_ret.shape[1])
     ])
 
-    # ── Systemic crash probability ────────────────────────────────────────────
     # P(>= crash_n_sectors drop > crash_threshold in terminal period)
     crashed      = terminal_ret < cfg["crash_threshold"]          # (N_paths, N)
     n_crashed    = crashed.sum(axis=1)                             # (N_paths,)
@@ -587,9 +550,7 @@ def plot_dashboard(paths: np.ndarray, S0: np.ndarray, risk: dict, cfg: dict, fil
     log.info("  Dashboard saved → %s", filename)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Main pipeline
-# ─────────────────────────────────────────────────────────────────────────────
 def main(
     headlines: list[str] | None = None,
     cfg: dict | None = None,
@@ -616,19 +577,14 @@ def main(
     log.info("=" * 70)
     t_start = time.time()
 
-    # ── 1. Data ───────────────────────────────────────────────────────────────
     prices, returns, S0 = load_data(run_cfg)
 
-    # ── 2. Regime ─────────────────────────────────────────────────────────────
     regime_result = detect_regime(returns, run_cfg)
 
-    # ── 3. Network ────────────────────────────────────────────────────────────
     network_result = build_network(returns, run_cfg)
 
-    # ── 4. Sentiment ──────────────────────────────────────────────────────────
     sentiment_result = compute_sentiment(headlines, run_cfg)
 
-    # ── 5. Parameter adjustment ───────────────────────────────────────────────
     params = adjust_parameters(
         returns,
         sentiment_result["aggregate_score"],
@@ -636,16 +592,12 @@ def main(
         run_cfg,
     )
 
-    # ── 6. Monte Carlo ────────────────────────────────────────────────────────
     paths, vol_trace, event_counts = run_simulation(S0, params, network_result, run_cfg)
 
-    # ── 7. Risk metrics ───────────────────────────────────────────────────────
     risk = compute_risk_metrics(paths, S0, run_cfg)
 
-    # ── 8. Dashboard plot ─────────────────────────────────────────────────────
     plot_dashboard(paths, S0, risk, run_cfg)
 
-    # ── 9. 3D Monte Carlo surface ─────────────────────────────────────────────
     from dashboard.monte_carlo_3d import plot_3d_surface
     plot_3d_surface(paths, tickers=run_cfg["tickers"])
 
@@ -653,7 +605,6 @@ def main(
     log.info("=" * 70)
     log.info("  Pipeline complete in %.2f s", t_end - t_start)
 
-    # ── Structured output ─────────────────────────────────────────────────────
     output: dict[str, Any] = {
         "regime"                    : regime_result["current_regime_name"],
         "sentiment_score"           : round(sentiment_result["aggregate_score"], 6),
@@ -675,7 +626,6 @@ def main(
         },
     }
 
-    # ── Print structured summary ──────────────────────────────────────────────
     SEP = "=" * 70
     print(f"\n{SEP}")
     print("  SYSTEMIC RISK ENGINE — OUTPUT SUMMARY")
@@ -701,9 +651,7 @@ def main(
     return output
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Entry point
-# ─────────────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     SAMPLE_HEADLINES = [
         "RBI holds repo rate steady amid persistent inflation concerns.",

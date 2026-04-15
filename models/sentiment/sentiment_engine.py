@@ -19,9 +19,7 @@ import torch
 import numpy as np
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Config
-# ─────────────────────────────────────────────────────────────────────────────
 MODEL_NAME  = "ProsusAI/finbert"
 ALPHA       = 0.05    # sentiment → drift adjustment  (annualised units)
 BETA        = 0.10    # sentiment → vol amplification factor
@@ -35,18 +33,14 @@ label_map  = {0: "positive", 1: "negative", 2: "neutral"}
 IDX_POS    = 0
 IDX_NEG    = 1
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 1. Load FinBERT
-# ─────────────────────────────────────────────────────────────────────────────
 print(f"Loading FinBERT ({MODEL_NAME}) ...")
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 model     = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME)
 model.eval()                         # inference mode — no gradient tracking
 print("  Model loaded ✓\n")
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 2. Sentiment scoring function
-# ─────────────────────────────────────────────────────────────────────────────
 def get_sentiment_score(text: str) -> dict:
     """
     Run FinBERT on a single string.
@@ -87,9 +81,7 @@ def get_sentiment_score(text: str) -> dict:
     }
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 3. GBM parameter adjustment
-# ─────────────────────────────────────────────────────────────────────────────
 def adjust_gbm_params(mu: float, sigma: float,
                       sentiment_score: float,
                       alpha: float = ALPHA,
@@ -117,9 +109,7 @@ def adjust_gbm_params(mu: float, sigma: float,
     return mu_new, sigma_new
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 4. Demo — run on a set of representative financial headlines
-# ─────────────────────────────────────────────────────────────────────────────
 DEMO_HEADLINES = [
     # Clearly positive
     "JPMorgan beats earnings expectations with record quarterly profit.",
@@ -183,9 +173,7 @@ print(f"    σ  :  {SIGMA_BASE:.2%}  →  {sig_agg:.2%}  "
       f"(×{sig_agg/SIGMA_BASE:.3f}  vol amplification)")
 print(SEP)
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 5. Integration hook — ready to use in MC engine
-# ─────────────────────────────────────────────────────────────────────────────
 def sentiment_adjusted_params(headlines: list[str],
                                mu_baseline: np.ndarray,
                                sigma_baseline: np.ndarray,

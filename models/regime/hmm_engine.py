@@ -4,7 +4,6 @@ from hmmlearn import hmm
 # Number of assets
 NUM_ASSETS = 10  
 
-# Define true parameters for HMM
 TRUE_A = [
     [0, 0.5, 0.5],
     [0.6, 0, 0.4],
@@ -22,7 +21,6 @@ TRUE_SIGMA = [
 ]
 TRUE_PI = [0.3, 0.4, 0.3]   # initial state probabilities
 
-# Define the number of states and generate observed data
 NUM_STATES = 3   
 T = 250            # sequence length
 OBSERVATIONS = np.empty((T, NUM_ASSETS))
@@ -44,7 +42,6 @@ model.fit(OBSERVATIONS)
 logprob, alphas = model.decode(OBSERVATIONS, algorithm="viterbi")
 pred_states = np.argmax(alphas, 1)   # convert from state indices to state probabilities
 
-# Calculate accuracy and confusion matrix for state prediction analysis
 confusion = np.zeros((NUM_STATES, NUM_STATES))
 for true_state, pred_state in zip(STATES, pred_states):
     confusion[true_state, pred_state] += 1

@@ -18,9 +18,7 @@ import warnings
 warnings.filterwarnings("ignore")
 from hmmlearn import hmm
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 1. Download real data
-# ─────────────────────────────────────────────────────────────────────────────
 TICKER     = "^GSPC"    # S&P 500
 START_DATE = "2015-01-01"
 END_DATE   = "2024-12-31"
@@ -40,9 +38,7 @@ COVID_START = "2020-02-20"
 COVID_END   = "2020-05-01"
 covid_mask  = (dates >= COVID_START) & (dates <= COVID_END)
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 2. Fit 3-state HMM helper
-# ─────────────────────────────────────────────────────────────────────────────
 NUM_STATES   = 3
 REGIME_NAMES = ["Bull", "Bear", "Crisis"]
 REGIME_COLS  = ["#2ecc71", "#e67e22", "#e74c3c"]   # green / amber / red
@@ -101,9 +97,7 @@ def decode_and_align(model: hmm.GaussianHMM, obs: np.ndarray):
     return states, perm, model
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 3. Initial fit
-# ─────────────────────────────────────────────────────────────────────────────
 print("Fitting 3-state Gaussian HMM ...")
 model = fit_hmm(obs, crisis_mu_bias=0.0)
 states, perm, model = decode_and_align(model, obs)
@@ -111,9 +105,7 @@ states, perm, model = decode_and_align(model, obs)
 covid_crisis_frac = states[covid_mask].tolist().count(2) / covid_mask.sum()
 print(f"  COVID window classified as Crisis: {covid_crisis_frac:.1%}")
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 4. Auto-tune if COVID is not predominantly Crisis
-# ─────────────────────────────────────────────────────────────────────────────
 TUNE_THRESHOLD = 0.60    # at least 60% of COVID days must be Crisis
 bias_step      = 0.002
 max_rounds     = 8
@@ -138,18 +130,14 @@ if covid_crisis_frac < TUNE_THRESHOLD:
         covid_crisis_frac   = frac
         print(f"  ⚠ Max rounds reached; best COVID-crisis={covid_crisis_frac:.1%}")
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 5. Extract fitted parameters
-# ─────────────────────────────────────────────────────────────────────────────
 mu_fitted    = model.means_[perm, 0] * 252          # annualised mean per regime
 vol_fitted   = np.sqrt(model.covars_[perm, 0, 0]) * np.sqrt(252)
 A_aligned    = model.transmat_[np.ix_(perm, perm)]
 hold_times   = 1.0 / (1.0 - np.diag(model.transmat_) + 1e-12)
 hold_aligned = hold_times[perm]
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 6. Plot
-# ─────────────────────────────────────────────────────────────────────────────
 print("Generating plot ...")
 fig, axes = plt.subplots(
     3, 1, figsize=(16, 10),
@@ -168,7 +156,6 @@ for ax in axes:
 price_vals = price.loc[dates].values
 ax_price, ax_regime, ax_ret = axes
 
-# ── Panel 1: Price with regime background ────────────────────────────────────
 ax_price.plot(dates, price_vals, color="#ffffff", linewidth=1.0, zorder=5)
 ax_price.set_ylabel("S&P 500 Price", color="white", fontsize=11)
 ax_price.set_title("S&P 500 — HMM Regime Classification (3 States)",
@@ -204,7 +191,6 @@ patches = [mpatches.Patch(color=REGIME_COLS[k], label=REGIME_NAMES[k],
 ax_price.legend(handles=patches, loc="upper left",
                 facecolor="#1a1a2e", labelcolor="white", fontsize=9)
 
-# ── Panel 2: Discrete regime index ───────────────────────────────────────────
 regime_colors = np.array(REGIME_COLS)[states]
 for k in range(NUM_STATES):
     m = states == k
@@ -215,7 +201,6 @@ ax_regime.set_yticklabels(["Bull", "Bear", "Crisis"], color="white", fontsize=8)
 ax_regime.set_ylabel("Regime", color="white", fontsize=9)
 ax_regime.set_ylim(0, 1)
 
-# ── Panel 3: Daily log returns ────────────────────────────────────────────────
 ret_vals = obs[:, 0]
 pos = ret_vals >= 0
 ax_ret.bar(dates[pos],  ret_vals[pos],  color="#2ecc71", width=1, alpha=0.7)
@@ -229,9 +214,7 @@ out_path = "models/regime/regime_plot.png"
 plt.savefig(out_path, dpi=150, bbox_inches="tight", facecolor="#0f1117")
 print(f"  Saved → {out_path}")
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 7. Print extracted parameters
-# ─────────────────────────────────────────────────────────────────────────────
 SEP = "=" * 60
 print(f"\n{SEP}")
 print("  REGIME-DEPENDENT PARAMETERS  (fitted on real S&P 500)")

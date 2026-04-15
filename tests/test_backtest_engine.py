@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-# ── fixtures ───────────────────────
+
 
 def _make_returns(
     n_days: int = 300,
@@ -37,8 +37,6 @@ def _stub_pipeline(var_value: float = -0.05):
     return _fn
 
 
-# ── import under test ──────────────────────────────────────────────────────
-
 from models.backtest_engine import (
     BacktestConfig,
     BacktestResult,
@@ -46,9 +44,7 @@ from models.backtest_engine import (
 )
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # BacktestConfig
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 class TestBacktestConfig:
     def test_defaults(self):
@@ -74,9 +70,7 @@ class TestBacktestConfig:
         assert ov["var_confidence"] == 0.99
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # RollingBacktester — expanding window
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 class TestExpandingWindow:
     def test_window_grows_by_step_size(self):
@@ -99,9 +93,7 @@ class TestExpandingWindow:
         assert results[0].train_size == cfg.min_train_days
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # Violation logic
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 class TestViolationLogic:
     def test_violation_when_loss_exceeds_var(self):
@@ -146,9 +138,7 @@ class TestViolationLogic:
         assert first.realized_loss < first.predicted_var_95
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # No look-ahead bias
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 class TestNoLookahead:
     def test_pipeline_never_sees_future_data(self):
@@ -172,9 +162,7 @@ class TestNoLookahead:
             assert origin_idx + cfg.forecast_horizon <= len(ret)
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # Summary statistics
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 class TestSummary:
     def test_summary_violation_rate(self):
@@ -204,9 +192,7 @@ class TestSummary:
         assert math.isnan(summary["mean_predicted_var"])
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # DataFrame output
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 class TestToDataFrame:
     def test_shape_and_columns(self):
@@ -232,9 +218,7 @@ class TestToDataFrame:
         assert df.empty
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # Insufficient data
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 class TestInsufficientData:
     def test_no_origins_when_too_short(self):
@@ -263,9 +247,7 @@ class TestInsufficientData:
             RollingBacktester(ret, _stub_pipeline(), BacktestConfig())
 
 
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # CSV persistence
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 class TestSave:
     def test_save_creates_csv(self, tmp_path: Path):

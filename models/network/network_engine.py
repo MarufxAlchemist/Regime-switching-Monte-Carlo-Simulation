@@ -19,9 +19,7 @@ import yfinance as yf
 import warnings
 warnings.filterwarnings("ignore")
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Config
-# ─────────────────────────────────────────────────────────────────────────────
 TICKERS = [
     "JPM", "BAC", "GS", "MS", "C",        # Banks
     "XOM", "CVX",                           # Energy
@@ -32,9 +30,6 @@ END        = "2024-12-31"
 WINDOW     = 60           # rolling window in trading days
 CORR_THRESH = 0.60        # minimum |correlation| to draw an edge
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Step 0 — Download data
-# ─────────────────────────────────────────────────────────────────────────────
 print("Downloading price data ...")
 raw   = yf.download(TICKERS, start=START, end=END,
                     auto_adjust=True, progress=False)["Close"]
@@ -42,9 +37,6 @@ raw   = raw.dropna()
 rets  = np.log(raw / raw.shift(1)).dropna()
 print(f"  {len(raw)} days × {len(TICKERS)} assets")
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Step 1 — Rolling 60-day correlation
-# ─────────────────────────────────────────────────────────────────────────────
 print("\nStep 1 — Computing rolling 60-day correlations ...")
 
 roll_corr = {}      # date → (N×N) correlation DataFrame
@@ -56,9 +48,6 @@ for i, date in enumerate(dates_roll):
 
 print(f"  Computed {len(roll_corr)} rolling correlation matrices")
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Step 2 — Build NetworkX graph (at each date); track metrics over time
-# ─────────────────────────────────────────────────────────────────────────────
 print("\nStep 2 — Building NetworkX graphs ...")
 
 def build_graph(corr_df: pd.DataFrame, threshold: float) -> nx.Graph:
@@ -82,9 +71,7 @@ def build_graph(corr_df: pd.DataFrame, threshold: float) -> nx.Graph:
                 )
     return G
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Robust eigenvector centrality (handles disconnected graphs)
-# ─────────────────────────────────────────────────────────────────────────────
 def eigenvector_centrality_robust(G: nx.Graph) -> dict:
     """
     Eigenvector centrality for possibly-disconnected graphs.
@@ -140,9 +127,7 @@ centrality_df = pd.DataFrame(centrality_ts).T     # rows=dates, cols=tickers
 print(f"  Done.  Avg density: {density_s.mean():.4f}  "
       f"  Peak density: {density_s.max():.4f} on {density_s.idxmax().date()}")
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Final Snapshot — full report on the most recent window
-# ─────────────────────────────────────────────────────────────────────────────
 last_date  = dates_roll[-1]
 G_final    = build_graph(roll_corr[last_date], CORR_THRESH)
 density_f  = nx.density(G_final)
@@ -185,9 +170,7 @@ print(f"  Most central node at peak: "
       f"(centrality={max(ec_peak.values()):.4f})")
 print(SEP)
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Plot — 3-panel: density, centrality heatmap, final network graph
-# ─────────────────────────────────────────────────────────────────────────────
 print("\nGenerating plots ...")
 
 fig = plt.figure(figsize=(18, 12), facecolor="#0f1117")
@@ -207,7 +190,6 @@ for ax in [ax_dens, ax_cent, ax_net]:
     for spine in ax.spines.values():
         spine.set_edgecolor("#333")
 
-# ── Panel A: Network density over time ───────────────────────────────────────
 ax_dens.plot(density_s.index, density_s.values, color="#3498db", linewidth=1.2)
 ax_dens.fill_between(density_s.index, density_s.values, alpha=0.15, color="#3498db")
 ax_dens.axvline(pd.Timestamp("2020-03-16"), color="#e74c3c",
@@ -217,7 +199,6 @@ ax_dens.set_ylabel("Density", color="white")
 ax_dens.set_xlabel("Date", color="white")
 ax_dens.legend(facecolor="#1a1a2e", labelcolor="white", fontsize=8)
 
-# ── Panel B: Eigenvector centrality heatmap ───────────────────────────────────
 cent_plot = centrality_df[TICKERS]
 im = ax_cent.imshow(cent_plot.T.values, aspect="auto", cmap="plasma",
                     extent=[0, len(cent_plot), 0, len(TICKERS)])
@@ -231,7 +212,6 @@ ax_cent.set_xticklabels(xlbls, rotation=30, fontsize=7, color="white")
 ax_cent.set_title("B — Eigenvector Centrality Over Time", fontsize=11)
 plt.colorbar(im, ax=ax_cent, fraction=0.03, pad=0.04).ax.yaxis.set_tick_params(color="white")
 
-# ── Panel C: Final network graph ─────────────────────────────────────────────
 pos          = nx.spring_layout(G_final, seed=42, weight="weight")
 edge_weights = [G_final[u][v]["weight"] for u, v in G_final.edges()]
 node_ec_vals = [ec_final.get(t, 0) for t in G_final.nodes()]

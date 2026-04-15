@@ -6,7 +6,6 @@ def run_backtest(model_type):
     
     df = be.run_backtest(model_type)
 
-    # Calculate metrics using the DataFrame
     avg_var = df['predicted_var_95'].mean()
     avg_loss = df['realized_loss'].mean()
     violation_rate = df['violation'].sum() / len(df)
