@@ -2,7 +2,7 @@
 Unit tests for ``models.backtest_engine``
 =========================================
 All tests use synthetic data and stub pipelines — no live data, GPU, or
-heavy model fitting required.  Total runtime ≈ 1 s.
+heavy model fitting required.  Total runtime ≈ 1 s
 """
 
 from __future__ import annotations
