@@ -117,7 +117,7 @@ git clone https://github.com/YOUR_USERNAME/Regime-switching-Monte-Carlo-Simulati
 cd Regime-switching-Monte-Carlo-Simulation
 ```
 
-### 2. Running via Docker (Recommended)
+### 2. Running via Docker (Recommended).
 You do not need to manage a Python virtual environment. We use Docker Compose profiles to run specific parts of the project.
 
 To run the **main pipeline** (downloads data, detects regime, scores sentiment, runs the Monte Carlo, and outputs the graph):
