@@ -55,7 +55,7 @@ Upon a successful pipeline execution, the engine spits out numerical metrics and
 
 ---
 
-## 🧮 Mathematical Framework
+## Mathematical Framework
 
 The engine relies on a sequence of quantitative models to simulate cascading tail-risk.
 
