@@ -140,7 +140,7 @@ docker-compose --profile pipeline up --build
 ### 3. Local Installation (Alternative)
 If you prefer running it bare-metal, ensure you have Python 3.9+ installed.
 ```bash
-# Create a virtual environment
+# Create a virtual environment.
 python -m venv venv
 # Activate it (Windows)
 venv\Scripts\activate
