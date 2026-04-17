@@ -9,7 +9,7 @@ A research-grade Python pipeline designed to analyze and simulate systemic risk 
 
 ---
 
-## 🚀 Features & Pipeline Architecture
+## Features & Pipeline Architecture
 
 The engine runs a sequential daily simulation pipeline over a 252-day trading year (for 5,000 parallel paths) evaluating 10 major Indian equities across diverse sectors
 
