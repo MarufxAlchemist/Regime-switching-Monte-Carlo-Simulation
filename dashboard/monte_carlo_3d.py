@@ -119,7 +119,7 @@ def plot_3d_surface(
         height=800,
         margin=dict(l=0, r=0, t=60, b=0),
         updatemenus=[
-            # Play / Pause
+            # Play / Pause.
             dict(
                 type="buttons",
                 showactive=False,
