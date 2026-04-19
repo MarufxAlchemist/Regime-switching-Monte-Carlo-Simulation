@@ -25,7 +25,7 @@ def plot_3d_surface(
     n_paths : int
         Paths to render (default 150).
     t_stride : int
-        Frame interval (default 8 → ~30 frames for 252 steps)
+        Frame interval (default 8 → ~30 frames for 252 steps).
     """
     n_total_paths, n_t, n_assets = simulated_paths.shape
     n_p = min(n_paths, n_total_paths)
