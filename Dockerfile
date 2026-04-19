@@ -25,7 +25,7 @@ RUN pip install --upgrade pip \
  && pip install --prefix=/install -r requirements.txt
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Stage 2 — runtime image
+# Stage 2 — runtime image.
 # ─────────────────────────────────────────────────────────────────────────────
 FROM python:3.11-slim AS runtime
 
