@@ -51,7 +51,7 @@ COPY . .
 RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
 USER appuser
 
-# Hugging Face model cache — writable by appuser
+# Hugging Face model cache — writable by appuser.
 ENV HF_HOME=/app/.cache/huggingface
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
