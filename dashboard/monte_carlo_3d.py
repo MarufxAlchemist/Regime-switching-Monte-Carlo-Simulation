@@ -183,7 +183,7 @@ def plot_3d_surface(
         config={"responsive": True},
     )
 
-    # Inject fullscreen CSS
+    # Inject fullscreen CSS.
     raw_html = raw_html.replace(
         "<body>",
         '<body style="margin:0; padding:0; overflow:hidden; background:#0f1117;">',
