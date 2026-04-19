@@ -53,7 +53,7 @@ All three models must operate under **identical conditions** to ensure fair comp
 |   Burn-in (min 252 days)    Rolling evaluation period        |
 ```
 
-- **Burn-in period**: Used only to satisfy the minimum training window. No performance metrics are computed here
+- **Burn-in period**: Used only to satisfy the minimum training window. No performance metrics are computed here.
 - **Rolling evaluation period**: Every 5 trading days, a new forecast origin is created. Performance metrics are computed over all forecast origins in this period.
 
 ### 3.2  Storage schema
