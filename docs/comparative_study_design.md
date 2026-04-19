@@ -4,7 +4,7 @@
 
 ## 1  Scope and Objective
 
-This document specifies the design of a controlled rolling-backtest experiment to compare three systemic risk Monte Carlo models across statistical and economic performance dimensions
+This document specifies the design of a controlled rolling-backtest experiment to compare three systemic risk Monte Carlo models across statistical and economic performance dimensions.
 
 | ID | Model | Description |
 |---|---|---|
