@@ -76,7 +76,7 @@ All three result tables share the **same set of origin dates** (defined by Model
 
 ---
 
-## 4  Primary Evaluation Metrics
+## 4  Primary Evaluation Metrics.
 
 ### 4.1  Violation rate
 
