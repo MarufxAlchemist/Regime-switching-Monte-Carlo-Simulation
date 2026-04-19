@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libopenblas-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy only the requirements first to leverage layer caching
+# Copy only the requirements first to leverage layer caching.
 COPY requirements.txt .
 
 # Install into a prefix directory so we can copy it cleanly into the runtime stage
