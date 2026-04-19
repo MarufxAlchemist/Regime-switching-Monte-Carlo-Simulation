@@ -18,7 +18,7 @@ The experiment answers a single research question:
 
 ---
 
-## 2  Experimental Controls
+## 2  Experimental Controls.
 
 All three models must operate under **identical conditions** to ensure fair comparison. The following are fixed across all models:
 
