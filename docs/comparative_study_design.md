@@ -147,7 +147,7 @@ $$\hat{p}_m^{(k)} = \frac{\sum_t I_t^{(m)} \cdot \mathbf{1}\{\text{regime}_t = k
 
 ---
 
-## 6  Systemic Crash Prediction Accuracy
+## 6  Systemic Crash Prediction Accuracy.
 
 ### 6.1  Defining a systemic crash event
 
