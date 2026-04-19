@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy only the requirements first to leverage layer caching.
 COPY requirements.txt .
 
-# Install into a prefix directory so we can copy it cleanly into the runtime stage
+# Install into a prefix directory so we can copy it cleanly into the runtime stage.
 RUN pip install --upgrade pip \
  && pip install --prefix=/install -r requirements.txt
 
