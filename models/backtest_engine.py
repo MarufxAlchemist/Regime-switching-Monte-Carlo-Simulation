@@ -41,7 +41,7 @@ log = logging.getLogger("backtest")
 # Protocols
 
 class PipelineFn(Protocol):
-    """Signature expected by ``RollingBacktester.pipeline_fn``."""
+    """Signature expected by ``RollingBacktester.pipeline_fn``"""
 
     def __call__(
         self,
