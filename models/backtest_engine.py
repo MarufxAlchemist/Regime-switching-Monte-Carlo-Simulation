@@ -59,7 +59,7 @@ class PipelineFn(Protocol):
 
 @dataclass(frozen=True)
 class BacktestConfig:
-    """Immutable configuration for a rolling backtest run."""
+    """Immutable configuration for a rolling backtest run"""
 
     forecast_horizon: int = 30
     """Trading-day look-ahead for VaR evaluation."""
