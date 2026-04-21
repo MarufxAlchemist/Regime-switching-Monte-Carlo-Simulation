@@ -14,7 +14,7 @@ Design principles:
   • Modular — ``BacktestConfig``, ``BacktestResult``, and
     ``RollingBacktester`` are fully decoupled for reuse
 
-Usage
+Usage.
 -----
 >>> from models.backtest_engine import (
 ...     RollingBacktester, BacktestConfig, make_pipeline_fn,
