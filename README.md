@@ -42,7 +42,7 @@ The `main.py` script serves as the primary orchestrator that sequentially drives
 1. Fetch asset pricing via `yfinance`.
 2. Extract mathematical matrices (HMM variables, Network Centrality, and FinBERT Sentiment scores).
 3. Override standard Geometric Brownian Motion variables based on current regimes and sentiment.
-4. Force 5,000 contagion-amplified random walks
+4. Force 5,000 contagion-amplified random walks.
 5. Generate aggregated risk metrics and output dashboards
 
 ---
