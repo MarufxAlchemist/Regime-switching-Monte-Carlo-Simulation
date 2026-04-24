@@ -5,7 +5,7 @@ Research-grade pipeline for Indian equity sector risk analysis.
 
 Pipeline order:
   1. Load sector return data.
-  2. Detect current market regime (HMM)
+  2. Detect current market regime (HMM).
   3. Compute latest correlation network (density, centrality)
   4. Score news sentiment (FinBERT)
   5. Adjust GBM drift and volatility with sentiment
