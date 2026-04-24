@@ -1,5 +1,5 @@
 """
-Systemic Risk Engine — Main Orchestrator
+Systemic Risk Engine — Main Orchestrator.
 =========================================
 Research-grade pipeline for Indian equity sector risk analysis
 
