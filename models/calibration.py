@@ -57,7 +57,7 @@ MC_N_STEPS         = 30               # steps per path.
 HMM_N_ITER         = 100              # reduced HMM iterations for speed.
 
 
-# Single-origin pipeline evaluation
+# Single-origin pipeline evaluation...
 
 def evaluate_origin(
     returns: pd.DataFrame,
