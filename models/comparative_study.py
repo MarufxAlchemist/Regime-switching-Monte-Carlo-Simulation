@@ -2,7 +2,7 @@ from models import backtest_engine as be
 from models import validation_tests as vt
 
 def run_backtest(model_type):
-    """Runs backtest for given model type and returns results in a dictionary"""
+    """Runs backtest for given model type and returns results in a dictionary."""
     
     df = be.run_backtest(model_type)
 
