@@ -22,7 +22,8 @@ def run_backtest(model_type):
     }
     
     return result
-
+    
+#Defined RUN BACKTEST Engine
 def main():
     baseline = run_backtest('baseline')
     regime = run_backtest('regime')
