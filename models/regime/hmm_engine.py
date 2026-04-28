@@ -10,7 +10,7 @@ TRUE_A = [
     [0.3, 0.3, 0.4]
 ]
 TRUE_MU = [
-    np.array([0.1, -0.2, 0.1])[:NUM_ASSETS],   # returns for NUM_ASSETS assets
+    np.array([0.1, -0.2, 0.1])[:NUM_ASSETS],   # returns for NUM_ASSETS assets.
     np.array([-0.2, 0.3, -0.4])[:NUM_ASSETS],   # returns for NUM_ASSETS assets.
     np.array([0.1, 0.1, 0.2])[:NUM_ASSETS]        # returns for NUM_ASSETS assets
 ]
