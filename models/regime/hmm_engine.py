@@ -15,7 +15,7 @@ TRUE_MU = [
     np.array([0.1, 0.1, 0.2])[:NUM_ASSETS]        # returns for NUM_ASSETS assets.
 ]
 TRUE_SIGMA = [
-    np.eye(NUM_ASSETS) * 0.03,      # vols for NUM_ASSETS assets
+    np.eye(NUM_ASSETS) * 0.03,      # vols for NUM_ASSETS assets.
     np.eye(NUM_ASSETS) * 0.05,       # vols for NUM_ASSETS assets.
     np.eye(NUM_ASSETS) * 0.1          # vols for NUM_ASSETS assets.
 ]
