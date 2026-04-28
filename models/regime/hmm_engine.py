@@ -11,7 +11,7 @@ TRUE_A = [
 ]
 TRUE_MU = [
     np.array([0.1, -0.2, 0.1])[:NUM_ASSETS],   # returns for NUM_ASSETS assets
-    np.array([-0.2, 0.3, -0.4])[:NUM_ASSETS],   # returns for NUM_ASSETS assets
+    np.array([-0.2, 0.3, -0.4])[:NUM_ASSETS],   # returns for NUM_ASSETS assets.
     np.array([0.1, 0.1, 0.2])[:NUM_ASSETS]        # returns for NUM_ASSETS assets
 ]
 TRUE_SIGMA = [
