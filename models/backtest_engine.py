@@ -124,7 +124,7 @@ class BacktestResult:
     ``forecast_horizon`` window.  Negative ⇒ loss."""
 
     violation: bool
-    """``True`` when ``realized_loss < predicted_var_95`` (a VaR breach)."""
+    """``True`` when ``realized_loss < predicted_var_95`` (a VaR breach)"""
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
