@@ -38,7 +38,7 @@ import pandas as pd
 
 log = logging.getLogger("backtest")
 
-# Protocols
+# Protocols.
 
 class PipelineFn(Protocol):
     """Signature expected by ``RollingBacktester.pipeline_fn``"""
