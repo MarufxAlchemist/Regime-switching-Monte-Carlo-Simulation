@@ -6,7 +6,7 @@ from scipy.stats import chi2
 # Simulation parameters
 num_paths = 50000
 num_assets = 7
-T = 1       # 1 year horizon
+T = 1       # 1 year horizon.
 dt = T / num_paths  # time step
 
 mu = torch.tensor([0.08, 0.10, 0.07, 0.09, 0.06, 0.11, 0.08])  # annual expected returns
