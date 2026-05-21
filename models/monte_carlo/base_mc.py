@@ -11,7 +11,7 @@ dt = T / num_paths  # time step
 
 mu = torch.tensor([0.08, 0.10, 0.07, 0.09, 0.06, 0.11, 0.08])  # annual expected returns
 
-# Example covariance matrix (symmetric positive definite)
+# Example covariance matrix (symmetric positive definite).
 raw = torch.randn(num_assets, num_assets) * 0.02
 Sigma = raw @ raw.T + torch.eye(num_assets) * 0.01  # ensures PD
 
