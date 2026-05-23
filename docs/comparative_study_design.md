@@ -42,7 +42,7 @@ All three models must operate under **identical conditions** to ensure fair comp
 
 ---
 
-## 3  Data Protocol
+## 3  Data Protocol.
 
 ### 3.1  Full dataset partitioning
 
