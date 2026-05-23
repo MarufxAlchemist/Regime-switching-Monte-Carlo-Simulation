@@ -29,7 +29,7 @@ All three models must operate under **identical conditions** to ensure fair comp
 | Training window type | Expanding (no data from the future ever exposed) |
 | Minimum training window | 252 trading days |
 | Step size | 5 trading days |
-| Forecast horizon | 30 trading days |
+| Forecast horizon | 30 trading days. |
 | VaR confidence level | $1 - \alpha = 0.95$ ($\alpha = 0.05$) |
 | Monte Carlo paths | 5,000 per forecast origin (per model) |
 | MC random seed | Fixed identical seed per origin across models (ensures same noise draws where applicable) |
