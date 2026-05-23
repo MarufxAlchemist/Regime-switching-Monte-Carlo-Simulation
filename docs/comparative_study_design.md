@@ -50,7 +50,7 @@ All three models must operate under **identical conditions** to ensure fair comp
 |<—————————— Full sample [2021-01-01, 2024-12-31] ——————————>|
 |                                                              |
 | [2021-01-01, 2022-12-31]    [2023-01-01, 2024-11-30]        |
-|   Burn-in (min 252 days)    Rolling evaluation period        |
+|   Burn-in (min 252 days)    Rolling evaluation period  .      |
 ```
 
 - **Burn-in period**: Used only to satisfy the minimum training window. No performance metrics are computed here.
