@@ -64,7 +64,7 @@ Each model stores a separate result table with the following columns per origin:
 |---|---|---|
 | `origin_date` | date | Last day of the training window |
 | `train_size` | int | Number of trading days in the training window |
-| `predicted_var_95` | float | Portfolio-level VaR(95%) from the MC simulation |
+| `predicted_var_95` | float | Portfolio-level VaR(95%) from the MC simulation. |
 | `realized_loss` | float | Cumulative 30-day equal-weight portfolio return |
 | `violation` | bool | $I_t = \mathbf{1}\{\text{realized\_loss} < -\text{predicted\_var\_95}\}$ |
 | `regime_id` | int or None | Detected regime at origin (0/1/2; None for Model A) |
