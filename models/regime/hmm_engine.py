@@ -28,7 +28,7 @@ STATES = []
 
 np.random.seed(1987)  # for reproducibility
 for t in range(T):
-    s = STATES[-1] if STATES else np.random.choice([0, 1, 2], p=TRUE_PI)   # initial state
+    s = STATES[-1] if STATES else np.random.choice([0, 1, 2], p=TRUE_PI)   # initial state.
     STATES.append(s)
     OBSERVATIONS[t] = np.random.multivariate_normal(TRUE_MU[s], TRUE_SIGMA[s])
 
