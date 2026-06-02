@@ -35,7 +35,7 @@ for t in range(T):
 # Fit a Gaussian HMM with the observed data
 model = hmm.GaussianHMM(n_components=NUM_STATES, covariance_type="full")
 model.startprob_ = np.array([0.6, 0.3, 0.1])   # start probabilities
-model.transmat_ = TRUE_A                         # transition matrix
+model.transmat_ = TRUE_A                         # transition matrix.
 model.fit(OBSERVATIONS)
 
 # Predict the most likely sequence of states (i.e., argmax over states)
