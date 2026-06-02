@@ -19,7 +19,7 @@ TRUE_SIGMA = [
     np.eye(NUM_ASSETS) * 0.05,       # vols for NUM_ASSETS assets.
     np.eye(NUM_ASSETS) * 0.1          # vols for NUM_ASSETS assets.
 ]
-TRUE_PI = [0.3, 0.4, 0.3]   # initial state probabilities
+TRUE_PI = [0.3, 0.4, 0.3]   # initial state probabilities.
 
 NUM_STATES = 3   
 T = 250            # sequence length.
