@@ -38,7 +38,7 @@ Understand how **three key parameters** shape the model's risk estimates by syst
 ---
 
 #### `beta` — Sentiment Amplification
-> Governs `σ_adj = σ_baseline × (1 + β · |S|)`. With `|S| ≤ 1`, beta is effectively a percentage vol-bump per full sentiment unit
+> Governs `σ_adj = σ_baseline × (1 + β · |S|)`. With `|S| ≤ 1`, beta is effectively a percentage vol-bump per full sentiment unit.
 
 | Level | Value | Interpretation |
 |---|---|---|
