@@ -15,7 +15,7 @@ Understand how **three key parameters** shape the model's risk estimates by syst
 
 ---
 
-## 2. Parameter Grid
+## 2. Parameter Grid.
 
 ### 2.1 Recommended Ranges & Rationale
 
