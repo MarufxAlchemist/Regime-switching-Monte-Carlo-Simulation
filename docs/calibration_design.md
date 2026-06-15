@@ -5,7 +5,7 @@
 
 ## 1. Objective
 
-Understand how **three key parameters** shape the model's risk estimates by systematically sweeping their values across a calibrated grid and observing the effect on four target metrics recorded at each backtest window
+Understand how **three key parameters** shape the model's risk estimates by systematically sweeping their values across a calibrated grid and observing the effect on four target metrics recorded at each backtest window.
 
 | Parameter | Symbol | Lives in | Mechanism |
 |---|---|---|---|
