@@ -66,7 +66,7 @@ Understand how **three key parameters** shape the model's risk estimates by syst
 | Medium | 90 | ~1 quarter; smoother but lagged |
 | Long | 120 | ~6 months; structurally stable |
 
-**Grid:** `[20, 40, 60, 90, 120]` — 5 levels
+**Grid:** `[20, 40, 60, 90, 120]` — 5 levels.
 
 > [!CAUTION]
 > Window sizes below 20 risk rank-deficient correlation matrices (you have 10 assets), causing eigenvector centrality failures. Stay at or above 20
