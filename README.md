@@ -1,6 +1,6 @@
 <div align="center">
   <h1>📈 Systemic Risk Engine</h1>
-  <p><strong>Regime-Switching Contagion & Monte Carlo Simulation for Equity Markets</strong></p>
+  <p><strong>Regime-Switching Contagion & Monte Carlo Simulation for Equity Markets.</strong></p>
 </div>
 
 <br>
