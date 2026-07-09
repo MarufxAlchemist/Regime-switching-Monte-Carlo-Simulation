@@ -1,6 +1,6 @@
 # Statistical Tests for Value-at-Risk Backtesting Validation
 
-## Formal Derivations
+## Formal Derivations.
 
 ---
 
