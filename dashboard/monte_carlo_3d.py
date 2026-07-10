@@ -21,7 +21,7 @@ def plot_3d_surface(
     simulated_paths : np.ndarray
         Shape: (N_paths, N_steps+1, N_assets)
     tickers : list[str] | None
-        Ticker labels for each asset.  Falls back to "Asset 0", "Asset 1", …
+        Ticker labels for each asset.  Falls back to "Asset 0", "Asset 1", 
     n_paths : int
         Paths to render (default 150).
     t_stride : int
