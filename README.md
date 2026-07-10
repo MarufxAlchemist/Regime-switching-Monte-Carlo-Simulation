@@ -91,7 +91,7 @@ $\sigma_{j, t+1} = \sigma_{j,t} \times (1 + \alpha_{\text{contagion}} \cdot w_{i
 **Volatility Mean-Reversion & Cap:**
 $\sigma_{j, t+1} \leftarrow \sigma_{j,t+1}(1 - \beta_{\text{decay}}) + \sigma_{\text{base}} \cdot \beta_{\text{decay}}$
 
-### 5. Risk Metrics
+### 5. Risk Metrics.
 **Value at Risk (VaR) & Expected Shortfall (CVaR):**
 $P\left(R_p \le -\text{VaR}_{95\%}\right) = 0.05$
 $\text{ES}_{95\%} = -\mathbb{E}\left[ R_p \mid R_p \le -\text{VaR}_{95\%} \right]$
