@@ -138,7 +138,7 @@ docker-compose --profile pipeline up --build
 *(Note: The first time you run this, Docker will download the `ProsusAI/finbert` HuggingFace model. A docker volume handles caching the model for sub-sequent fast runs!)*
 
 ### 3. Local Installation (Alternative)
-If you prefer running it bare-metal, ensure you have Python 3.9+ installed.
+If you prefer running it bare-metal, ensure you have Python 3.9+ installed
 ```bash
 # Create a virtual environment.
 python -m venv venv
