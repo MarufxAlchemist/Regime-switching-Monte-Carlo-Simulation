@@ -19,7 +19,7 @@ The engine runs a sequential daily simulation pipeline over a 252-day trading ye
    ![HMM Regime Plot](./models/regime/regime_plot.png)
 
 2. **Correlation Network Generation**
-   Builds a dynamic correlation graph over a 60-day rolling window to identify highly interconnected "central" stocks that pose the greatest systemic risk if they crash.
+   Builds a dynamic correlation graph over a 60-day rolling window to identify highly interconnected "central" stocks that pose the greatest systemic risk if they crash...
    
    ![Network Topology Plot](./models/network/network_plot.png)
 
