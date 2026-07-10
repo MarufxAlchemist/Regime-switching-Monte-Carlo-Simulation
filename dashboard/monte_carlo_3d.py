@@ -39,7 +39,7 @@ def plot_3d_surface(
         z_ranges[k] = (float(d.min()), float(d.max()))
     z_min, z_max = z_ranges[0]
 
-    # Frame timesteps — always include last step.
+    # Frame timesteps — always include last step..
     timesteps = list(range(0, n_t, t_stride))
     if timesteps[-1] != n_t - 1:
         timesteps.append(n_t - 1)
