@@ -47,7 +47,7 @@ The `main.py` script serves as the primary orchestrator that sequentially drives
 
 ---
 
-## 📊 Dashboard & Visualization
+## 📊 Dashboard & Visualization.
 
 Upon a successful pipeline execution, the engine spits out numerical metrics and automatically generates a visual dashboard (`simulation_dashboard.png`) summarizing the normalized expected price paths and the Expected Shortfall per sector.
 
