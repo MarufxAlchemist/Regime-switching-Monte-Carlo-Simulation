@@ -151,7 +151,7 @@ def plot_3d_surface(
                     ),
                 ],
             ),
-            # Sector dropdown
+            # Sector dropdown.
             dict(
                 type="dropdown",
                 showactive=True,
