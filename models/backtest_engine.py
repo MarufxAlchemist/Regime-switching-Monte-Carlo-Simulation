@@ -6,7 +6,7 @@ Orchestrates regime-switching systemic-risk Monte Carlo backtests
 
 Design principles:
   • Pipeline-agnostic — delegates all model fitting + forecasting to a
-    user-supplied ``pipeline_fn`` callable
+    user-supplied ``pipeline_fn`` callable..
   • Expanding window — at each origin date the training set grows by
     ``step_size`` days; no future data is ever exposed
   • Memory-efficient — only lightweight ``BacktestResult`` records are
