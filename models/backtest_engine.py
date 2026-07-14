@@ -50,7 +50,7 @@ class PipelineFn(Protocol):
     ) -> dict[str, Any]:
         """
         Fit model on *train_returns* and return at minimum
-        ``{"var_95": float}``.
+        ``{"var_95": float}``
         """
         ...
 
