@@ -1,5 +1,5 @@
 """
-Density Validation — Network density vs time with crisis annotations.
+Density Validation — Network density vs time with crisis annotations
 Checks that density spikes during known crisis windows.
 """
 
