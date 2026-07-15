@@ -77,7 +77,7 @@ ax.yaxis.label.set_color("white")
 ax.fill_between(density.index, density.values, alpha=0.20, color="#3498db")
 ax.plot(density.index, density.values, color="#3498db", linewidth=1.2, label="Network Density")
 
-# Baseline
+# Baseline.
 ax.axhline(baseline, color="#95a5a6", linewidth=1.0, linestyle="--", label=f"Mean ({baseline:.3f})")
 
 # Crisis windows
