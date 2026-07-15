@@ -96,7 +96,7 @@ for (s, e, label), col in zip(CRISIS_WINDOWS, colors_c):
         bbox=dict(boxstyle="round,pad=0.25", fc="#0f1117", alpha=0.7),
     )
 
-# Rolling 30d mean overlay
+# Rolling 30d mean overlay.
 smooth = density.rolling(30).mean()
 ax.plot(density.index, smooth.values, color="#f39c12", linewidth=1.5,
         linestyle="-", alpha=0.8, label="30d rolling avg")
