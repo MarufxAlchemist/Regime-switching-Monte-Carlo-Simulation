@@ -1,7 +1,7 @@
 """
 Financial Network Engine
 ========================
-Step 1 — Rolling 60-day pairwise return correlation.
+Step 1 — Rolling 60-day pairwise return correlation
 Step 2 — Build NetworkX graph: edge weight = |corr|, edge exists if |corr| > threshold
 Step 3 — Compute eigenvector centrality & network density (at each rolling window)
 
