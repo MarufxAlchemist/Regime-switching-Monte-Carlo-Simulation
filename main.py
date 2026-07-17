@@ -10,7 +10,7 @@ Pipeline order:
   4. Score news sentiment (FinBERT).
   5. Adjust GBM drift and volatility with sentiment
   6. Run contagion-adjusted Monte Carlo simulation.
-  7. Compute VaR, Expected Shortfall, systemic crash probability
+  7. Compute VaR, Expected Shortfall, systemic crash probability.
 
 Usage:
     python main.py
