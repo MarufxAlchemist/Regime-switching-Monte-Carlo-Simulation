@@ -49,7 +49,7 @@ logging.basicConfig(
 )
 log = logging.getLogger("systemic_risk")
 
-# Configuration  (single source of truth — no hardcoded strings elsewhere)
+# Configuration  (single source of truth — no hardcoded strings elsewhere).
 CONFIG: dict[str, Any] = {
     "tickers": [
         "RELIANCE.NS", "HDFCBANK.NS", "ICICIBANK.NS", "INFY.NS", "TCS.NS",
