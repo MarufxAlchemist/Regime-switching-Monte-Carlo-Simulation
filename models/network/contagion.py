@@ -13,7 +13,7 @@ Contagion update (inside MC loop):
 
 Parameters:
   α (alpha) = 0.30   contagion amplification strength.
-  θ (theta) = -0.03  crash threshold (−3% single-day return)
+  θ (theta) = -0.03  crash threshold (−3% single-day return).
   β (beta)  = 0.05   vol mean-reversion speed per step.
 """
 
