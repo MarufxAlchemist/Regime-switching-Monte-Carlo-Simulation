@@ -2,7 +2,7 @@
 Network-Contagion Monte Carlo Simulation
 =========================================
 
-Standard GBM Monte Carlo vs Contagion-Amplified GBM
+Standard GBM Monte Carlo vs Contagion-Amplified GBM.
 
 Contagion update (inside MC loop):
   For each time step t:
