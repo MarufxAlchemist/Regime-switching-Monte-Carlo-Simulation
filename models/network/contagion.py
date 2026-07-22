@@ -1,5 +1,5 @@
 """
-Network-Contagion Monte Carlo Simulation
+Network-Contagion Monte Carlo Simulation..
 =========================================
 
 Standard GBM Monte Carlo vs Contagion-Amplified GBM.
