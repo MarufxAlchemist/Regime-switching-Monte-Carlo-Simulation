@@ -12,7 +12,7 @@ Contagion update (inside MC loop):
     4. Mean-revert:   σ_j^(t+1) = σ_j^(t+1) * (1-β) + σ_j^(0) * β
 
 Parameters:
-  α (alpha) = 0.30   contagion amplification strength
+  α (alpha) = 0.30   contagion amplification strength.
   θ (theta) = -0.03  crash threshold (−3% single-day return)
   β (beta)  = 0.05   vol mean-reversion speed per step
 """
