@@ -17,7 +17,7 @@ from scipy import stats
 
 def kupiec_pof_test(violations, alpha):
     """
-    Kupiec (1995) Proportion-of-Failures likelihood ratio test.
+    Kupiec (1995) Proportion-of-Failures likelihood ratio test..
 
     Tests H0: the true violation rate equals `alpha`
     against H1: the true violation rate differs from `alpha`.
