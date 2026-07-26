@@ -26,7 +26,7 @@ T = 250            # sequence length.
 OBSERVATIONS = np.empty((T, NUM_ASSETS))
 STATES = []
 
-np.random.seed(1987)  # for reproducibility
+np.random.seed(1987)  # for reproducibility.
 for t in range(T):
     s = STATES[-1] if STATES else np.random.choice([0, 1, 2], p=TRUE_PI)   # initial state.
     STATES.append(s)
