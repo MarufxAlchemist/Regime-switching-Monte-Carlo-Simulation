@@ -5,7 +5,7 @@ Standard implementations of Kupiec (1995) Proportion-of-Failures test
 and Christoffersen (1998) conditional coverage test.
 
 References:
-  Kupiec, P. (1995). Techniques for verifying the accuracy of risk
+  Kupiec, P. (1995). Techniques for verifying the accuracy of risk.
     measurement models. Journal of Derivatives.
   Christoffersen, P. (1998). Evaluating interval forecasts.
     International Economic Review.
