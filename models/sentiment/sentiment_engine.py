@@ -40,7 +40,7 @@ model     = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME)
 model.eval()                         # inference mode — no gradient tracking
 print("  Model loaded ✓\n")
 
-# 2. Sentiment scoring function
+# 2. Sentiment scoring function.
 def get_sentiment_score(text: str) -> dict:
     """
     Run FinBERT on a single string.
