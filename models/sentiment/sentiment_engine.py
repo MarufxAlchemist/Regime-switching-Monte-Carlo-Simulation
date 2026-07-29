@@ -19,7 +19,7 @@ import torch
 import numpy as np
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
-# Config
+# Config.
 MODEL_NAME  = "ProsusAI/finbert"
 ALPHA       = 0.05    # sentiment → drift adjustment  (annualised units)
 BETA        = 0.10    # sentiment → vol amplification factor
