@@ -8,7 +8,7 @@ For each headline / text:
   2. Softmax → (P_neg, P_neu, P_pos)
   3. Sentiment score  S = P_pos − P_neg  ∈ (−1, +1)
 
-GBM parameter adjustment with sentiment:
+GBM parameter adjustment with sentiment;
   μ_new   = μ  +  α × S          (drift shift)
   σ_new   = σ  × (1 + β × |S|)  (vol amplification)
 
