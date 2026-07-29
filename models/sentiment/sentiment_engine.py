@@ -1,7 +1,7 @@
 """
 FinBERT Sentiment Engine
 =========================
-Loads ProsusAI/finbert from Hugging Face.
+Loads ProsusAI/finbert from Hugging Face..
 
 For each headline / text:
   1. Tokenise and run through FinBERT
