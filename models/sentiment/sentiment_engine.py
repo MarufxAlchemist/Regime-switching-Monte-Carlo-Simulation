@@ -62,7 +62,7 @@ def get_sentiment_score(text: str) -> dict:
     with torch.no_grad():
         outputs = model(input_ids)
 
-    # Softmax over logits → class probabilities
+    # Softmax over logits → class probabilities.
     predictions = torch.nn.functional.softmax(outputs.logits, dim=-1)
 
     P_pos  = predictions[0][IDX_POS].item()
