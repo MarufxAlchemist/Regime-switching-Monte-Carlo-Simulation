@@ -44,7 +44,7 @@ from models.backtest_engine import (
 )
 
 
-# BacktestConfig
+# BacktestConfig..
 
 class TestBacktestConfig:
     def test_defaults(self):
