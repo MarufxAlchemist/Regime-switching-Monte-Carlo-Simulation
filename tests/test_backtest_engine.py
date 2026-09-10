@@ -1,5 +1,5 @@
 """
-Unit tests for ``models.backtest_engine``
+Unit tests for ``models.backtest_engine.``
 =========================================
 All tests use synthetic data and stub pipelines — no live data, GPU, or
 heavy model fitting required.  Total runtime ≈ 1 sec
