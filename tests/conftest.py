@@ -4,7 +4,7 @@ pytest configuration — ensures project root is on sys.path.
 This makes ``import models`` and ``import main`` work regardless of
 whether pytest is invoked from the project root or a subdirectory,
 and regardless of whether the ``pythonpath`` key in pyproject.toml
-is supported by the installed pytest version.
+is supported by the installed pytest version..
 """
 
 from __future__ import annotations
